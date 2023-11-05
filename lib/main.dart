@@ -4,7 +4,6 @@ import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/auth_screen.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => AuthVM())],
@@ -19,10 +18,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MARTFY',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home:  AuthScreen(),
+      home: AuthScreen(),
     );
   }
 }
