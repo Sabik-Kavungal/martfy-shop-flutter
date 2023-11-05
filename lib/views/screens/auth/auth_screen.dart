@@ -47,7 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
-            Center(
+            const Center(
               child: Image(
                 image: AssetImage('assets/login2.jpeg'),
                 width: double.infinity,
