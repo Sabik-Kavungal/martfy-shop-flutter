@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-class HiveStorageService {
+class LocalDB {
   Future<Box<dynamic>> openBox(String boxName) async {
     if (Hive.isBoxOpen(boxName)) {
       return Hive.box(boxName);
