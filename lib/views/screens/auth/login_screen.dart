@@ -16,21 +16,6 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // const Image(
-              //   image: AssetImage('assets/login2.jpeg'),
-              //   width: double.infinity,
-              //   height: 250,
-              // ),
-              // const CustomText(
-              //   text: 'Login',
-              //   size: 22,
-              // ),
-              // GlobalVariables.sheight,
-              // const CustomText(
-              //   text: 'Welcome back!',
-              //   size: 24,
-              // ),
-              // GlobalVariables.xheight,
               CustomTextField(
                 controller: _emailController,
                 hintText: 'email...',
