@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+  void printx(String format, dynamic argument) {
+    print('$format $argument');
+  }
 class GlobalVariables {
   static SizedBox swidth = const SizedBox(
     width: 5,
