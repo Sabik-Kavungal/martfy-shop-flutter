@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                 prefixIcon: const Icon(Icons.lock),
                 focusNode: _passwordNode,
               ),
-              CustomButton(
+              CustomButton( 
                 color: Colors.blue,
                 onClick: () {
                   final name = _emailController.text;

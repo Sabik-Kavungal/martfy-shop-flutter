@@ -22,9 +22,10 @@ class AuthVM extends ChangeNotifier {
       _user = user.copyWith(email: user.email, password: user.password);
       final response = await apiProvider.post('signin', _user!.toJson());
       final token = response['token'];
-      print(token);
+       printx("this is my token", token);
       final userBox = await localDB.openBox('token');
       localDB.saveData(userBox, "key", token);
+       printx("this userBox", userBox);
       success = true;
       notifyListeners();
     } catch (error, stackTrace) {
