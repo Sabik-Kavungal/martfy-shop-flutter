@@ -5,13 +5,12 @@ import 'package:martfy/views/screens/auth/register.screen.dart';
 
 import 'package:provider/provider.dart';
 
-
-
 class AuthScreen extends StatefulWidget {
   static const route = 'auth-screen';
   int initialPage;
 
-  AuthScreen({ Key? key,
+  AuthScreen({
+    Key? key,
     this.initialPage = 0,
   }) : super(key: key);
 
@@ -37,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     PageController _pageController =
-    PageController(initialPage: widget.initialPage);
+        PageController(initialPage: widget.initialPage);
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -49,7 +48,11 @@ class _AuthScreenState extends State<AuthScreen> {
               height: MediaQuery.of(context).size.height * 0.05,
             ),
             Center(
-              child: Image.asset('assets/login2.jpeg'),
+              child: Image(
+                image: AssetImage('assets/login2.jpeg'),
+                width: double.infinity,
+                height: 150,
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
@@ -81,7 +84,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           color: AuthVM.selectedIndex == 0
                               ? Colors.blue
                               : Colors.white,
-                          margin:const  EdgeInsets.only(top: 8),
+                          margin: const EdgeInsets.only(top: 8),
                         ),
                       ],
                     ),
