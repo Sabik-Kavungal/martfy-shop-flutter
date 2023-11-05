@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:martfy/views/screens/auth/authVM.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home-screen';
@@ -6,9 +8,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("This is Home screen"),
+    return  Scaffold(
+      body: Consumer<AuthVM>(
+        builder: (context,authVM,child) {
+          return Center(
+            child: Text(authVM.user!.name.toString()),
+          );
+        }
       ),
     );
   }

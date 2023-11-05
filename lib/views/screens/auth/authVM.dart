@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:martfy/constants/commen_variable.dart';
+import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/noetwork_repo.dart';
 import 'package:martfy/models/user_model.dart';
 
@@ -7,6 +8,7 @@ class AuthVM extends ChangeNotifier {
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
   final ApiProvider apiProvider = ApiProvider();
+  LocalDB localDB = LocalDB();
   User? _user;
   User? get user => _user;
   updateSelectedIndex(int index) {
@@ -18,7 +20,11 @@ class AuthVM extends ChangeNotifier {
     bool success = false;
     try {
       _user = user.copyWith(email: user.email, password: user.password);
-      await apiProvider.post('signin', _user!.toJson());
+      final response = await apiProvider.post('signin', _user!.toJson());
+      final token = response['token'];
+      print(token);
+      final userBox = await localDB.openBox('token');
+      localDB.saveData(userBox, "key", token);
       success = true;
       notifyListeners();
     } catch (error, stackTrace) {
