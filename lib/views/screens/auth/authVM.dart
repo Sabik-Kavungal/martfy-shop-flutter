@@ -7,10 +7,14 @@ import 'package:martfy/models/user_model.dart';
 class AuthVM extends ChangeNotifier {
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
+
   final ApiProvider apiProvider = ApiProvider();
+
   LocalDB localDB = LocalDB();
+
   User? _user;
   User? get user => _user;
+
   updateSelectedIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
