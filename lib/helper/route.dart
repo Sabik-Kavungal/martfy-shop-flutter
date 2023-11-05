@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/auth/register.screen.dart';
+import 'package:martfy/views/screens/home/home_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -13,6 +14,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => RegistrationScreen(),
+      );
+       case HomeScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) =>  HomeScreen(),
       );
 
     default:
