@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:martfy/models/user_model.dart';
+import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/widgets/custom_button.dart';
 import 'package:martfy/views/widgets/custom_textield.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login-screen';
@@ -28,7 +32,37 @@ class LoginScreen extends StatelessWidget {
                 prefixIcon: const Icon(Icons.lock),
                 focusNode: _passwordNode,
               ),
-              CustomButton(color: Colors.blue, onClick: () {}, name: 'Login'),
+              CustomButton(
+                color: Colors.blue,
+                onClick: () {
+                  final name = _emailController.text;
+                  final email = _passwordController.text;
+
+                  final userVM = Provider.of<AuthVM>(context, listen: false);
+                  final user = User(email: name, password: email);
+
+                  userVM.login(user, (success) {
+                    if (success) {
+                      Fluttertoast.showToast(
+                        msg: 'Successfully Logged',
+                        backgroundColor: Colors.green,
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                    } else {
+                      // Handle the case when the login fails.
+                      Fluttertoast.showToast(
+                        msg: 'Login Failed',
+                        backgroundColor: Colors.red,
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                    }
+                  });
+                },
+                name: 'Login',
+              )
+
               // GlobalVariables.mheight,
             ],
           ),
