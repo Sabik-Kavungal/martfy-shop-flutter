@@ -40,4 +40,21 @@ class AuthVM extends ChangeNotifier {
       printx("response", success);
     }
   }
+
+  Future<void> register(User user, void Function(bool success) callback) async {
+    bool success = false;
+    try {
+      _user = user.copyWith(
+          name: user.name, email: user.email, password: user.password);
+      await apiProvider.post('signup', _user!.toJson());
+      success = true;
+      notifyListeners();
+    } catch (error, stackTrace) {
+      printx("error", error);
+      printx("error", stackTrace);
+    } finally {
+      callback(success);
+      printx("response", success);
+    }
+  }
 }

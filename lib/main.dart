@@ -5,6 +5,7 @@ import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/route.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/auth_screen.dart';
+import 'package:martfy/views/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: AuthScreen(),
+      home: token != null ? const HomeScreen() : AuthScreen(),
     );
   }
 }
