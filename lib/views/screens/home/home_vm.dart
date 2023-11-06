@@ -10,18 +10,20 @@ class HomeVM extends ChangeNotifier {
 
   User? _user;
   User? get user => _user;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
   HomeVM() {
     getProfile();
   }
+
   Future<void> getProfile() async {
     try {
       _isLoading = true;
       notifyListeners();
       final response = await apiProvider.get('profile');
-      _user = User.fromJson(response)
-         ;
+      _user = User.fromJson(response);
       print('Posts: $_user');
       notifyListeners();
     } catch (error, stackTrace) {

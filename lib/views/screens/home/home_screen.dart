@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home-screen';
 
+  const HomeScreen({super.key});
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -39,32 +41,32 @@ class HomeScreen extends StatelessWidget {
                     Container(
                       width: 150,
                       height: 150,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.blue, // Background color for the avatar
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.person,
                         color: Colors.white, // Color of the person icon
                         size: 80,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "Hello, ${authVM.user?.name}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       "Email: ${authVM.user?.email}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () {
                         Provider.of<AuthVM>(context, listen: false)
@@ -74,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
-                      child: Text(
+                      child: const Text(
                         "Log Out",
                         style: TextStyle(
                           fontSize: 18,
