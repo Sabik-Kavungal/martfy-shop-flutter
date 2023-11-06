@@ -45,8 +45,8 @@ class RegistrationScreen extends StatelessWidget {
               CustomButton(
                 color: Colors.blue,
                 onClick: () {
-                  final  email= _emailController.text;
-                  final  password= _passwordController.text;
+                  final email = _emailController.text;
+                  final password = _passwordController.text;
                   final name = _nameController.text;
 
                   final userVM = Provider.of<AuthVM>(context, listen: false);

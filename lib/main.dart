@@ -6,6 +6,7 @@ import 'package:martfy/helper/route.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/auth_screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
+import 'package:martfy/views/screens/home/home_vm.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -15,7 +16,7 @@ void main() async {
   final boxOpen = await localDB.openBox("token");
   final a = localDB.getData(boxOpen, 'key');
   runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthVM())],
+      providers: [ChangeNotifierProvider(create: (_) => AuthVM(),),ChangeNotifierProvider(create: (_) => HomeVM())],
       child: MyApp(
         token: a,
       )));
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: token != null ? const HomeScreen() : AuthScreen(),
+      home: token != null ?  HomeScreen() : AuthScreen(),
     );
   }
 }

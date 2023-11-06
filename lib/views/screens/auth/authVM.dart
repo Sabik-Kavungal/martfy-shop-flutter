@@ -57,4 +57,10 @@ class AuthVM extends ChangeNotifier {
       printx("response", success);
     }
   }
+
+  logoutUser() async {
+    final a = await localDB.openBox("token");
+    localDB.deleteData(a, 'key');
+    notifyListeners();
+  }
 }
