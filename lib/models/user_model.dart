@@ -1,7 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../models/user_model.freezed.dart';
-part '../models/user_model.g.dart';
+
+
+part '../gen/user_model.freezed.dart';
+part '../gen/user_model.g.dart';
+
+
 // part '../user_model.freezed.dart';
 // part '../user_model.g.dart';
 // part 'user_model.freezed.dart';

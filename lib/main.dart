@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/route.dart';
@@ -16,7 +15,12 @@ void main() async {
   final boxOpen = await localDB.openBox("token");
   final a = localDB.getData(boxOpen, 'key');
   runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthVM(),),ChangeNotifierProvider(create: (_) => HomeVM())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthVM(),
+        ),
+        ChangeNotifierProvider(create: (_) => HomeVM())
+      ],
       child: MyApp(
         token: a,
       )));
@@ -37,7 +41,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: token != null ?  HomeScreen() : AuthScreen(),
+      home: token != null ? HomeScreen() : AuthScreen(),
     );
   }
 }

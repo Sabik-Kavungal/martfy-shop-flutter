@@ -1,0 +1,27 @@
+targets:
+  $default:
+    builders:
+      source_gen:combining_builder:
+        options:
+          build_extensions:
+            "^lib/models/{{}}.dart": "lib/gen/{{}}.g.dart"
+      json_serializable:
+        options:
+          any_map: false
+          checked: false
+          constructor: ""
+          create_factory: true
+          create_field_map: false
+          create_per_field_to_json: false
+          create_to_json: true
+          disallow_unrecognized_keys: false
+          explicit_to_json: true
+          field_rename: none
+          generic_argument_factories: false
+          ignore_unannotated: false
+          include_if_null: false
+
+      freezed:
+        options:
+          build_extensions:
+            "^lib/models/{{}}.dart": "lib/gen/{{}}.freezed.dart"
