@@ -1,32 +1,55 @@
-import 'package:hive_flutter/hive_flutter.dart';
-class LocalDB {
-  Future<Box<dynamic>> openBox(String boxName) async {
-    if (Hive.isBoxOpen(boxName)) {
-      return Hive.box(boxName);
-    } else {
-      return await Hive.openBox(boxName);
+import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
+
+class LocalDatabaseService {
+  final Logger _logger = Logger();
+
+Future<Box<T>> openBox<T>(String boxName) async {
+  try {
+    await Hive.openBox<T>(boxName); // Open the box before returning it
+    return Hive.box<T>(boxName);
+  } catch (e) {
+    _logger.e('Error opening box $boxName: $e');
+    rethrow;
+  }
+}
+
+
+  Future<void> toDb<T>(Box<T> box, String key, T value) async {
+    try {
+      await box.put(key, value);
+    } catch (e) {
+      _logger.e('Error saving data in box ${box.name}: $e');
+      rethrow;
     }
   }
 
-  Future<void> saveData(Box<dynamic> box, String key, dynamic value) async {
-    await box.put(key, value);
+  T? fromDb<T>(Box<T> box, String key) {
+    try {
+      return box.get(key);
+    } catch (e) {
+      _logger.e('Error getting data from box ${box.name}: $e');
+      return null;
+    }
   }
 
-  dynamic getData(Box<dynamic> box, String key) {
-    return box.get(key);
+  Future<void> deleteDb<T>(Box<T> box, String key) async {
+    try {
+      await box.delete(key);
+    } catch (e) {
+      _logger.e('Error deleting data from box ${box.name}: $e');
+      rethrow;
+    }
   }
 
-  Future<void> deleteData(Box<dynamic> box, String key) async {
-    await box.delete(key);
-  }
-
-  Future<void> closeBox(Box<dynamic> box) async {
-    if (box.isOpen) {
+  Future<void> closeBox<T>(Box<T> box) async {
+    try {
       await box.close();
+    } catch (e) {
+      _logger.e('Error closing box ${box.name}: $e');
+      rethrow;
     }
   }
 
-  bool isBoxOpen(Box<dynamic> box) {
-    return box.isOpen;
-  }
+  bool isBoxOpen<T>(Box<T> box) => box.isOpen;
 }

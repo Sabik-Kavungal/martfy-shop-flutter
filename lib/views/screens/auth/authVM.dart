@@ -11,7 +11,7 @@ class AuthVM extends ChangeNotifier {
 
   final ApiProvider apiProvider = ApiProvider();
 
-  LocalDB localDB = LocalDB();
+  LocalDatabaseService db = LocalDatabaseService();
   final Logger _logger = Logger();
 
   User user = User();
@@ -29,7 +29,7 @@ class AuthVM extends ChangeNotifier {
       final response = await apiProvider.post('signin', user.toJson());
       final token = response['token'];
       _logger.d("Token: $token");
-      localDB.saveData(await localDB.openBox('token'), "key", token);
+      db.toDb(await db.openBox('token'), "key", token);
       success = true;
       notifyListeners();
     } catch (error, stackTrace) {
@@ -57,8 +57,8 @@ class AuthVM extends ChangeNotifier {
   }
 
   logoutUser() async {
-    final a = await localDB.openBox("token");
-    localDB.deleteData(a, 'key');
+    final a = await db.openBox("token");
+    db.deleteDb(a, 'key');
     _logger.d("User logged out successfully");
     notifyListeners();
   }

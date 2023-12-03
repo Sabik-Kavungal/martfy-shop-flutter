@@ -6,7 +6,7 @@ import 'package:martfy/models/user_model.dart';
 class HomeVM extends ChangeNotifier {
   final ApiProvider apiProvider = ApiProvider();
 
-  LocalDB localDB = LocalDB();
+  LocalDatabaseService db = LocalDatabaseService();
 
   User? _user;
   User? get user => _user;

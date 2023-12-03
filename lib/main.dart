@@ -10,10 +10,8 @@ import 'package:provider/provider.dart';
 
 void main() async {
   await Hive.initFlutter();
-  LocalDB localDB = LocalDB();
-  localDB.openBox('token');
-  final boxOpen = await localDB.openBox("token");
-  final a = localDB.getData(boxOpen, 'key');
+  final token = LocalDatabaseService()
+      .fromDb(await LocalDatabaseService().openBox("token"), 'key');
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -22,14 +20,14 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HomeVM())
       ],
       child: MyApp(
-        token: a,
+        saved: token,
       )));
 }
 
 class MyApp extends StatelessWidget {
-  final String? token;
+  final String? saved;
 
-  const MyApp({super.key, this.token});
+  const MyApp({super.key, this.saved});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: token != null ? HomeScreen() : AuthScreen(),
+      home: saved != null ? HomeScreen() : AuthScreen(),
     );
   }
 }

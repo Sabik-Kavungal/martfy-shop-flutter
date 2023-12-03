@@ -45,12 +45,12 @@ class ApiProvider {
     }
   }
 
-  LocalDB localDB = LocalDB();
+  LocalDatabaseService db = LocalDatabaseService();
 
   Future<Map<String, dynamic>> get(String endpoint) async {
     try {
-      final boxOpen = await localDB.openBox("token");
-      final a = localDB.getData(boxOpen, 'key');
+      final boxOpen = await db.openBox("token");
+      final a = db.fromDb(boxOpen, 'key');
       final response = await http.get(
         Uri.parse('$baseUrl/api/$endpoint'),
         headers: {
