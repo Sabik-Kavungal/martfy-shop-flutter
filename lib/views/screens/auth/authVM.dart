@@ -24,12 +24,9 @@ class AuthVM extends ChangeNotifier {
   Future<void> login(void Function(bool success) callback) async {
     bool success = false;
     try {
-      final userN = user.copyWith(
-        email: user.email,
-        password: user.password,
-      );
-      printx(".........................", userN);
-      final response = await apiProvider.post('signin', userN.toJson());
+      user = user.copyWith(email: user.email, password: user.password);
+      printx(".........................", user);
+      final response = await apiProvider.post('signin', user.toJson());
       final token = response['token'];
       _logger.d("Token: $token");
       localDB.saveData(await localDB.openBox('token'), "key", token);
