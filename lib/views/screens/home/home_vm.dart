@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/noetwork_repo.dart';
 import 'package:martfy/models/user_model.dart';
@@ -7,7 +8,7 @@ class HomeVM extends ChangeNotifier {
   final ApiProvider apiProvider = ApiProvider();
 
   LocalDatabaseService db = LocalDatabaseService();
-
+  final Logger _logger = Logger();
   User? _user;
   User? get user => _user;
 
@@ -21,14 +22,12 @@ class HomeVM extends ChangeNotifier {
   Future<void> getProfile() async {
     try {
       _isLoading = true;
-      notifyListeners();
       final response = await apiProvider.get('profile');
       _user = User.fromJson(response);
-      print('Posts: $_user');
-      notifyListeners();
+      _logger.d('Profile: $_user');
     } catch (error, stackTrace) {
-      print('Error getting posts: $error');
-      print('Stack trace: $stackTrace');
+      _logger.e("Error getting profile: $error",
+          error: error, stackTrace: stackTrace);
     } finally {
       _isLoading = false;
       notifyListeners();
