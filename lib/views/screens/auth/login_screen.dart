@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:martfy/constants/commen_variable.dart';
 import 'package:martfy/models/user_model.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
@@ -10,56 +11,45 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login-screen';
   LoginScreen({Key? key}) : super(key: key);
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailNode = FocusNode();
   final FocusNode _passwordNode = FocusNode();
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<AuthVM>(context, listen: false);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
               CustomTextField(
-                controller: _emailController,
+                value: vm.user.email ?? '',
                 hintText: 'email...',
                 prefixIcon: const Icon(Icons.email),
                 focusNode: _emailNode,
+                onChange: (value) {
+                  vm.user = vm.user.copyWith(email: value);
+                },
               ),
               CustomTextField(
-                controller: _passwordController,
+                value: vm.user.password ?? '',
                 hintText: 'password...',
                 prefixIcon: const Icon(Icons.lock),
                 focusNode: _passwordNode,
+                onChange: (value) {
+                  vm.user = vm.user.copyWith(password: value);
+                },
               ),
-              CustomButton( 
+              CustomButton(
                 color: Colors.blue,
                 onClick: () {
-                  final name = _emailController.text;
-                  final email = _passwordController.text;
-
-                  final userVM = Provider.of<AuthVM>(context, listen: false);
-                  final user = User(email: name, password: email);
-
-                  userVM.login(user, (success) {
+                  vm.login((success) {
                     if (success) {
-                      Navigator.pushNamed(context, HomeScreen.routeName);
-
-                      Fluttertoast.showToast(
-                        msg: 'Successfully Logged',
-                        backgroundColor: Colors.green,
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                      );
+                      Navigator.pushNamed(context, HomeScreen.routeName)
+                          .then((value) {
+                        xmToast('Successfully Logged', Colors.green);
+                      });
                     } else {
-                      // Handle the case when the login fails.
-                      Fluttertoast.showToast(
-                        msg: 'Login Failed',
-                        backgroundColor: Colors.red,
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                      );
+                      xmToast('Login Failed', Colors.red);
                     }
                   });
                 },

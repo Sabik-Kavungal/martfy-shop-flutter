@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
+   final String value;
+  final TextEditingController? controller;
   final String hintText;
   final int maxLines;
+  
   final FocusNode focusNode;
   final TextInputType? textInputType;
   final Widget? prefixIcon;
+  final Function(String) onChange;
   final ValueChanged<String>? onFieldSubmitted;
   const CustomTextField({
     Key? key,
-    required this.controller,
+    this.controller,
     required this.hintText,
     this.onFieldSubmitted,
     this.maxLines = 1,
     this.textInputType,
     this.prefixIcon,
-    required this.focusNode,
+    required this.focusNode, required this.value, required this.onChange,
+  
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: const EdgeInsets.all(11.5),
       child: TextFormField(
+        initialValue: value,
         minLines: maxLines ?? 1,
         controller: controller,
         focusNode: focusNode,
@@ -49,6 +55,8 @@ class CustomTextField extends StatelessWidget {
           }
           return null;
         },
+       
+        onChanged:onChange,
         maxLines: maxLines,
       ),
     );

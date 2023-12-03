@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:martfy/constants/commen_variable.dart';
 import 'package:martfy/models/user_model.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
@@ -20,57 +21,49 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<AuthVM>(context, listen: false);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
               CustomTextField(
-                  focusNode: _nameNode,
-                  controller: _nameController,
+                  focusNode: FocusNode(),
+                  value: vm.user.name ?? '',
                   hintText: 'username...',
+                   onChange: (value) {
+                  vm.user = vm.user.copyWith(name: value);
+                },
                   prefixIcon: const Icon(Icons.person)),
               CustomTextField(
-                controller: _emailController,
+                value: vm.user.email ?? '',
                 hintText: 'email...',
                 prefixIcon: const Icon(Icons.email),
                 focusNode: _emailNode,
+                 onChange: (value) {
+                  vm.user = vm.user.copyWith(email: value);
+                },
               ),
               CustomTextField(
-                controller: _passwordController,
+                value: vm.user.password ?? '',
                 hintText: 'password...',
                 prefixIcon: const Icon(Icons.lock),
                 focusNode: _passwordNode,
+                 onChange: (value) {
+                  vm.user = vm.user.copyWith(password: value);
+                },
               ),
               CustomButton(
                 color: Colors.blue,
                 onClick: () {
-                  final email = _emailController.text;
-                  final password = _passwordController.text;
-                  final name = _nameController.text;
-
-                  final userVM = Provider.of<AuthVM>(context, listen: false);
-                  final user =
-                      User(name: name, email: email, password: password);
-
-                  userVM.register(user, (success) {
+                  vm.register((success) {
                     if (success) {
-                      Navigator.pushNamed(context, LoginScreen.routeName);
-
-                      Fluttertoast.showToast(
-                        msg: 'Successfully registred',
-                        backgroundColor: Colors.green,
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                      );
+                      Navigator.pushNamed(context, LoginScreen.routeName)
+                          .then((value) {
+                        xmToast('Successfully registred', Colors.green);
+                      });
                     } else {
-                      // Handle the case when the login fails.
-                      Fluttertoast.showToast(
-                        msg: 'regitration Failed',
-                        backgroundColor: Colors.red,
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                      );
+                      xmToast('regitration Failed', Colors.red);
                     }
                   });
                 },
