@@ -205,16 +205,37 @@ class HomeScreen extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
-              ),
+               CustomTextField(
+              hintText: "name",
+              focusNode: FocusNode(),
+              value: authVM.user.name ?? '',
+              onChange: (v) {
+                authVM.user = authVM.user.copyWith(name: v);
+              },
+            ),
+            CustomTextField(
+              hintText: "email",
+              focusNode: FocusNode(),
+               value: authVM.user.email ?? '',
+               onChange: (v) {
+                authVM.user = authVM.user.copyWith(email: v);
+              },
+            ),
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement the logic to update the profile
+                  authVM.updateProfile((success) {
+                    if (success) {
+                      Navigator.pop(context);
+
+                      xmToast('Successfully profile changed', Colors.green);
+                    } else {
+                      xmToast('change profile Failed', Colors.red);
+                    }
+                  });
                   Navigator.pop(context); // Close the dialog
                 },
-                child: const Text("Update Profile"),
+                child: const Text("Change Password"),
               ),
             ],
           ),

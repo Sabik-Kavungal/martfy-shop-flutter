@@ -71,4 +71,20 @@ class HomeVM extends ChangeNotifier {
       _logger.d("Response: $success");
     }
   }
+
+  Future<void> updateProfile(void Function(bool success) callback) async {
+    bool success = false;
+    try {
+      user = user.copyWith(name: user.name, email: user.email);
+      await apiProvider.put('profile', user.toJson());
+      printx("password", user.toJson());
+      success = true;
+      notifyListeners();
+    } catch (error, stackTrace) {
+      _logger.e("Error: $error", error: error, stackTrace: stackTrace);
+    } finally {
+      callback(success);
+      _logger.d("Response: $success");
+    }
+  }
 }
