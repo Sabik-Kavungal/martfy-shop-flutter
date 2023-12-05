@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 // HomeScreen.dart
 
-
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home-screen';
 
@@ -71,6 +70,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
+                leading: Icon(Icons.lock),
                 title: const Text('Change Password'),
                 onTap: () {
                   Navigator.pop(context);
@@ -78,6 +78,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               ListTile(
+                leading: Icon(Icons.person),
                 title: const Text('Update Profile'),
                 onTap: () {
                   Navigator.pop(context);
@@ -85,6 +86,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               ListTile(
+                leading: Icon(Icons.logout),
                 title: const Text('Log Out'),
                 onTap: () {
                   Navigator.pop(context);
@@ -135,100 +137,122 @@ class HomeScreen extends StatelessWidget {
                   left: 20,
                   right: 20,
                   bottom: 20,
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.blue,
-                            child: const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 50,
-                            ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // New UI elements for the home page
+                        Text(
+                          'Welcome to Your App!',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(height: 20),
-                          Text(
-                            "Hello, ${authVM.user?.name}",
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        const SizedBox(height: 20),
+                        // E-commerce UI elements
+                        // Replace these with your specific e-commerce design
+                        ElevatedButton(
+                          onPressed: () {
+                            // Add your e-commerce functionality here
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.orange),
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Email: ${authVM.user?.email}",
-                            style: const TextStyle(
+                          child: const Text(
+                            'Shop Now',
+                            style: TextStyle(
                               fontSize: 16,
-                              color: Colors.grey,
+                              color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, ChangePasswordPage.routeName);
-                            },
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.green),
-                            ),
-                            child: const Text(
-                              "Change Password",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
+                        ),
+                        const SizedBox(height: 20),
+                        // Existing profile UI elements
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.blue,
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Hello, ${authVM.user?.name}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Email: ${authVM.user?.email}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, ChangePasswordPage.routeName);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.green),
+                          ),
+                          child: const Text(
+                            'Change Password',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, UpdateProfilePage.routeName);
-                            },
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.blue),
-                            ),
-                            child: const Text(
-                              "Update Profile",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, UpdateProfilePage.routeName);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blue),
+                          ),
+                          child: const Text(
+                            'Update Profile',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              Provider.of<AuthVM>(context, listen: false)
-                                  .logoutUser();
-                              Navigator.pushNamed(
-                                  context, LoginScreen.routeName);
-                            },
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.red),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            Provider.of<AuthVM>(context, listen: false)
+                                .logoutUser();
+                            Navigator.pushNamed(context, LoginScreen.routeName);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.red),
+                          ),
+                          child: const Text(
+                            'Log Out',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
-                            child: const Text(
-                              "Log Out",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -239,13 +263,10 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
-  
-  // ... rest of your code
 }
 // UpdateProfilePage.dart
 
 // ChangePasswordPage.dart
-
 
 class ChangePasswordPage extends StatelessWidget {
   static const String routeName = '/change-password';
@@ -329,27 +350,28 @@ class UpdateProfileForm extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: ListView(
         children: [
           CustomTextField(
-            hintText: "name",
-            focusNode: FocusNode(),
+            hintText: "Name",
+            prefixIcon: Icon(Icons.person_search),
             value: authVM.user.name ?? '',
             onChange: (v) {
               authVM.user = authVM.user.copyWith(name: v);
             },
-          ),
-          CustomTextField(
-            hintText: "email",
             focusNode: FocusNode(),
+          ),
+          const SizedBox(height: 16),
+          CustomTextField(
+            hintText: "Email",
+            prefixIcon: Icon(Icons.email),
             value: authVM.user.email ?? '',
+            focusNode: FocusNode(),
             onChange: (v) {
               authVM.user = authVM.user.copyWith(email: v);
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () {
               authVM.updateProfile((success) {
