@@ -56,6 +56,7 @@ class AuthVM extends ChangeNotifier {
     }
   }
 
+ 
   logoutUser() async {
     final a = await db.openBox("token");
     db.deleteDb(a, 'key');

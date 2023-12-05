@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:martfy/constants/commen_variable.dart';
 import 'dart:convert';
 
 import 'package:martfy/helper/localDB.dart';
@@ -91,13 +92,19 @@ class ApiProvider {
   Future<Map<String, dynamic>> put(
       String endpoint, Map<String, dynamic> body) async {
     try {
+      final boxOpen = await db.openBox("token");
+      final a = db.fromDb(boxOpen, 'key');
       final response = await http.put(
-        Uri.parse('$baseUrl/$endpoint'),
-        headers: {'Content-Type': 'application/json'},
+        Uri.parse('$baseUrl/api/$endpoint'),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': a,
+        },
         body: jsonEncode(body),
       );
+      printx("body", response.body);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {
         throw Exception('Failed to make PUT API call: ${response.statusCode}');
