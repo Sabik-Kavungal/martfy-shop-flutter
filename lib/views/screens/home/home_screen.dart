@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:martfy/constants/commen_variable.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
 import 'package:martfy/views/widgets/custom_refresh.dart';
 import 'package:martfy/views/widgets/custom_textield.dart';
+
 import 'package:provider/provider.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+// HomeScreen.dart
+
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home-screen';
@@ -19,27 +23,118 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Welcome Home"),
       ),
-      body: Consumer<HomeVM>(
+      drawer: _buildDrawer(context),
+      body: _buildHomeBody(context),
+    );
+  }
+
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: Consumer<HomeVM>(
         builder: (context, authVM, child) {
-          if (authVM.isLoading) {
-            return const Center(
-              child: SpinKitDoubleBounce(
-                color: Colors.red,
-                size: 78.0,
+          return ListView(
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.white,
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.blue,
+                        size: 40,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      authVM.user?.name ?? "Guest",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      authVM.user?.email ?? "guest@example.com",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            );
-          } else if (authVM.user == null) {
-            return const Center(
-              child: Text('No data available.'),
-            );
-          } else {
-            return CustomRefresh(
-              onRefresh: () async {
-                await authVM.getProfile();
-              },
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+              ListTile(
+                title: const Text('Change Password'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, ChangePasswordPage.routeName);
+                },
+              ),
+              ListTile(
+                title: const Text('Update Profile'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, UpdateProfilePage.routeName);
+                },
+              ),
+              ListTile(
+                title: const Text('Log Out'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Provider.of<AuthVM>(context, listen: false).logoutUser();
+                  Navigator.pushNamed(context, LoginScreen.routeName);
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildHomeBody(BuildContext context) {
+    return Consumer<HomeVM>(
+      builder: (context, authVM, child) {
+        if (authVM.isLoading) {
+          return const Center(
+            child: SpinKitDoubleBounce(
+              color: Colors.red,
+              size: 78.0,
+            ),
+          );
+        } else if (authVM.user == null) {
+          return const Center(
+            child: Text('No data available.'),
+          );
+        } else {
+          return CustomRefresh(
+            onRefresh: () async {
+              await authVM.getProfile();
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    color: Colors.blue.withOpacity(0.2),
+                  ),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                  bottom: 20,
                   child: Card(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
@@ -51,17 +146,12 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors
-                                  .blue, // Background color for the avatar
-                            ),
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.blue,
                             child: const Icon(
                               Icons.person,
-                              color: Colors.white, // Color of the person icon
+                              color: Colors.white,
                               size: 50,
                             ),
                           ),
@@ -84,7 +174,8 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
-                              _showChangePasswordDialog(context,authVM);
+                              Navigator.pushNamed(
+                                  context, ChangePasswordPage.routeName);
                             },
                             style: ButtonStyle(
                               backgroundColor:
@@ -101,7 +192,8 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {
-                              _showUpdateProfileDialog(context,authVM);
+                              Navigator.pushNamed(
+                                  context, UpdateProfilePage.routeName);
                             },
                             style: ButtonStyle(
                               backgroundColor:
@@ -140,107 +232,139 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            );
-          }
-        },
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+  
+  // ... rest of your code
+}
+// UpdateProfilePage.dart
+
+// ChangePasswordPage.dart
+
+
+class ChangePasswordPage extends StatelessWidget {
+  static const String routeName = '/change-password';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Change Password"),
+      ),
+      body: ChangePasswordForm(),
+    );
+  }
+}
+
+class ChangePasswordForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    HomeVM authVM = Provider.of<HomeVM>(context, listen: false);
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CustomTextField(
+            hintText: "current-password",
+            focusNode: FocusNode(),
+            value: authVM.currentPassword ?? '',
+            onChange: (v) {
+              authVM.currentPassword = v;
+            },
+          ),
+          CustomTextField(
+            hintText: "new-password",
+            focusNode: FocusNode(),
+            value: authVM.newPassword ?? '',
+            onChange: (v) {
+              authVM.newPassword = v;
+            },
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              authVM.changePassword((success) {
+                if (success) {
+                  Navigator.pop(context);
+                  xmToast('Successfully password changed', Colors.green);
+                } else {
+                  xmToast('Change password failed', Colors.red);
+                }
+              });
+            },
+            child: const Text("Change Password"),
+          ),
+        ],
       ),
     );
   }
+}
 
-  void _showChangePasswordDialog(BuildContext context, HomeVM authVM) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Change Password"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-             CustomTextField(
-              hintText: "current-password",
-              focusNode: FocusNode(),
-              value: authVM.currentPassword ?? '',
-              onChange: (v) {
-                authVM.currentPassword = v;
-              },
-            ),
-            CustomTextField(
-              hintText: "new-password",
-              focusNode: FocusNode(),
-              value: authVM.newPassword ?? '',
-              onChange: (v) {
-                authVM.newPassword = v;
-              },
-            ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  authVM.changePassword((success) {
-                    if (success) {
-                      Navigator.pop(context);
+class UpdateProfilePage extends StatelessWidget {
+  static const String routeName = '/update-profile';
 
-                      xmToast('Successfully password changed', Colors.green);
-                    } else {
-                      xmToast('change password Failed', Colors.red);
-                    }
-                  });
-                  Navigator.pop(context); // Close the dialog
-                },
-                child: const Text("Change Password"),
-              ),
-            ],
-          ),
-        );
-      },
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Update Profile"),
+      ),
+      body: UpdateProfileForm(),
     );
   }
+}
 
-  void _showUpdateProfileDialog(BuildContext context, HomeVM authVM) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Update Profile"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-               CustomTextField(
-              hintText: "name",
-              focusNode: FocusNode(),
-              value: authVM.user.name ?? '',
-              onChange: (v) {
-                authVM.user = authVM.user.copyWith(name: v);
-              },
-            ),
-            CustomTextField(
-              hintText: "email",
-              focusNode: FocusNode(),
-               value: authVM.user.email ?? '',
-               onChange: (v) {
-                authVM.user = authVM.user.copyWith(email: v);
-              },
-            ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  authVM.updateProfile((success) {
-                    if (success) {
-                      Navigator.pop(context);
+class UpdateProfileForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    HomeVM authVM = Provider.of<HomeVM>(context, listen: false);
 
-                      xmToast('Successfully profile changed', Colors.green);
-                    } else {
-                      xmToast('change profile Failed', Colors.red);
-                    }
-                  });
-                  Navigator.pop(context); // Close the dialog
-                },
-                child: const Text("Change Password"),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CustomTextField(
+            hintText: "name",
+            focusNode: FocusNode(),
+            value: authVM.user.name ?? '',
+            onChange: (v) {
+              authVM.user = authVM.user.copyWith(name: v);
+            },
           ),
-        );
-      },
+          CustomTextField(
+            hintText: "email",
+            focusNode: FocusNode(),
+            value: authVM.user.email ?? '',
+            onChange: (v) {
+              authVM.user = authVM.user.copyWith(email: v);
+            },
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              authVM.updateProfile((success) {
+                if (success) {
+                  Navigator.pop(context);
+                  xmToast('Successfully profile changed', Colors.green);
+                } else {
+                  xmToast('Change profile failed', Colors.red);
+                }
+              });
+            },
+            child: const Text("Update Profile"),
+          ),
+        ],
+      ),
     );
   }
 }

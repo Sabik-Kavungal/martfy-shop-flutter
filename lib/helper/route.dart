@@ -20,6 +20,16 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) =>  HomeScreen(),
       );
+       case ChangePasswordPage.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) =>  ChangePasswordPage(),
+      );
+       case UpdateProfilePage.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) =>  UpdateProfilePage(),
+      );
 
     default:
       return MaterialPageRoute(
