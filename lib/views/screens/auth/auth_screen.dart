@@ -49,8 +49,8 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               height: MediaQuery.of(context).size.height * 0.1,
             ),
             Container(
-              height: 150,
-              width: 150,
+              height: 140,
+              width: 140,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.blue,
@@ -62,7 +62,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -79,7 +79,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 5,
             ),
             Expanded(
               child: PageView.builder(
