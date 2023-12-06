@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/auth/register.screen.dart';
-
-import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
   static const route = 'auth-screen';
@@ -18,26 +15,33 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateMixin {
+  late PageController _pageController;
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.initialPage == 1) {
-        Provider.of<AuthVM>(context, listen: false)
-            .updateSelectedIndex(widget.initialPage);
-      } else if (widget.initialPage == 0) {
-        Provider.of<AuthVM>(context, listen: false)
-            .updateSelectedIndex(widget.initialPage);
-      }
+    _pageController = PageController(initialPage: widget.initialPage);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: widget.initialPage);
+    _tabController.addListener(() {
+      _pageController.animateToPage(
+        _tabController.index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    PageController _pageController =
-        PageController(initialPage: widget.initialPage);
+  void dispose() {
+    _pageController.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -45,103 +49,80 @@ class _AuthScreenState extends State<AuthScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
-            const Center(
-              child: Image(
-                image: AssetImage('assets/login2.jpeg'),
-                width: double.infinity,
-                height: 150,
+            Container(
+              height: 150,
+              width: 150,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+              ),
+              child: Icon(
+                Icons.lock,
+                size: 80,
+                color: Colors.white,
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+              height: 20,
             ),
-            Consumer<AuthVM>(
-              builder: (context, AuthVM, child) => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () => _pageController.animateToPage(0,
-                        duration: const Duration(seconds: 1),
-                        curve: Curves.easeInOut),
-                    child: Column(
-                      children: [
-                        Text(
-                          'SIGN IN',
-                          style: TextStyle(
-                            fontWeight: AuthVM.selectedIndex == 0
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                            color: AuthVM.selectedIndex == 0
-                                ? Colors.black
-                                : Colors.grey,
-                          ),
-                        ),
-                        Container(
-                          height: 4,
-                          width: 60,
-                          color: AuthVM.selectedIndex == 0
-                              ? Colors.blue
-                              : Colors.white,
-                          margin: const EdgeInsets.only(top: 8),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 80),
-                  InkWell(
-                    onTap: () => _pageController.animateToPage(1,
-                        duration: const Duration(seconds: 1),
-                        curve: Curves.easeInOut),
-                    child: Column(
-                      children: [
-                        Text(
-                          'SIGN UP',
-                          style: TextStyle(
-                            fontWeight: AuthVM.selectedIndex == 1
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                            color: AuthVM.selectedIndex == 1
-                                ? Colors.black
-                                : Colors.grey,
-                          ),
-                        ),
-                        Container(
-                          height: 4,
-                          width: 60,
-                          color: AuthVM.selectedIndex == 1
-                              ? Colors.blue
-                              : Colors.white,
-                          margin: const EdgeInsets.only(top: 8),
-                        ),
-                      ],
-                    ),
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TabBar(
+                controller: _tabController,
+                indicator: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                tabs: [
+                  _buildTab('SIGN IN', Icons.login),
+                  _buildTab('SIGN UP', Icons.person_add),
                 ],
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
             Expanded(
-              child: Consumer<AuthVM>(
-                builder: (context, AuthVM, child) => PageView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: 2,
-                  controller: _pageController,
-                  itemBuilder: (context, index) {
-                    if (AuthVM.selectedIndex == 0) {
-                      return LoginScreen();
-                    } else {
-                      return RegistrationScreen();
-                    }
-                  },
-                  onPageChanged: (index) {
-                    AuthVM.updateSelectedIndex(index);
-                  },
-                ),
+              child: PageView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: 2,
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return LoginScreen();
+                  } else {
+                    return RegistrationScreen();
+                  }
+                },
+                onPageChanged: (index) {
+                  _tabController.animateTo(index);
+                },
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTab(String title, IconData icon) {
+    return Tab(
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
+          SizedBox(width: 8),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -117,7 +117,7 @@ class ApiProvider {
   delete(String endpoint) async {
     try {
       final response = await http.delete(
-        Uri.parse('$baseUrl/$endpoint'),
+        Uri.parse('$baseUrl/api/$endpoint'),
         headers: {'Content-Type': 'application/json'},
       );
       print(response.statusCode);
