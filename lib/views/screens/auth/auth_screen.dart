@@ -5,16 +5,13 @@ import 'package:martfy/views/screens/auth/register.screen.dart';
 class AuthScreen extends StatefulWidget {
   static const route = 'auth-screen';
   int initialPage;
-
   AuthScreen({
     Key? key,
     this.initialPage = 0,
   }) : super(key: key);
-
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
-
 class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateMixin {
   late PageController _pageController;
   late TabController _tabController;

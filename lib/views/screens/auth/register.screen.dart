@@ -8,10 +8,11 @@ import 'package:martfy/views/widgets/custom_button.dart';
 import 'package:martfy/views/widgets/custom_text.dart';
 import 'package:martfy/views/widgets/custom_textield.dart';
 import 'package:provider/provider.dart';
-
 class RegistrationScreen extends StatelessWidget {
   static const String routeName = '/registration-screen';
+
   RegistrationScreen({Key? key}) : super(key: key);
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -22,54 +23,93 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<AuthVM>(context, listen: false);
+
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomTextField(
-                  focusNode: FocusNode(),
-                  value: vm.user.name ?? '',
-                  hintText: 'username...',
-                   onChange: (value) {
-                  vm.user = vm.user.copyWith(name: value);
-                },
-                  prefixIcon: const Icon(Icons.person)),
-              CustomTextField(
-                value: vm.user.email ?? '',
-                hintText: 'email...',
-                prefixIcon: const Icon(Icons.email),
-                focusNode: _emailNode,
-                 onChange: (value) {
-                  vm.user = vm.user.copyWith(email: value);
-                },
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, Colors.white],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Card(
+              elevation: 3.0,
+              margin: EdgeInsets.all(16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
               ),
-              CustomTextField(
-                value: vm.user.password ?? '',
-                hintText: 'password...',
-                prefixIcon: const Icon(Icons.lock),
-                focusNode: _passwordNode,
-                 onChange: (value) {
-                  vm.user = vm.user.copyWith(password: value);
-                },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // CircleAvatar(
+                    //   radius: 40,
+                    //   backgroundImage: AssetImage('assets/logo.png'), // Your logo or icon
+                    // ),
+                    // SizedBox(height: 16),
+                    // Text(
+                    //   'Register an Account',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    SizedBox(height: 5),
+                    CustomTextField(
+                      focusNode: _nameNode,
+                      value: vm.user.name ?? '',
+                      hintText: 'Username...',
+                      onChange: (value) {
+                        vm.user = vm.user.copyWith(name: value);
+                      },
+                      prefixIcon: const Icon(Icons.person),
+                    ),
+                    SizedBox(height: 5),
+                    CustomTextField(
+                      value: vm.user.email ?? '',
+                      hintText: 'Email...',
+                      prefixIcon: const Icon(Icons.email),
+                      focusNode: _emailNode,
+                      onChange: (value) {
+                        vm.user = vm.user.copyWith(email: value);
+                      },
+                    ),
+                    SizedBox(height: 5),
+                    CustomTextField(
+                      value: vm.user.password ?? '',
+                      hintText: 'Password...',
+                      prefixIcon: const Icon(Icons.lock),
+
+                      focusNode: _passwordNode,
+                      onChange: (value) {
+                        vm.user = vm.user.copyWith(password: value);
+                      },
+                    ),
+                    SizedBox(height: 5),
+                    CustomButton(
+                      color: Colors.blue,
+                      onClick: () {
+                        vm.register((success) {
+                          if (success) {
+                            Navigator.pushNamed(context, LoginScreen.routeName)
+                                .then((value) {
+                              xmToast('Successfully registered', Colors.green);
+                            });
+                          } else {
+                            xmToast('Registration Failed', Colors.red);
+                          }
+                        });
+                      },
+                      name: 'Register',
+                    ),
+                  ],
+                ),
               ),
-              CustomButton(
-                color: Colors.blue,
-                onClick: () {
-                  vm.register((success) {
-                    if (success) {
-                      Navigator.pushNamed(context, LoginScreen.routeName)
-                          .then((value) {
-                        xmToast('Successfully registred', Colors.green);
-                      });
-                    } else {
-                      xmToast('regitration Failed', Colors.red);
-                    }
-                  });
-                },
-                name: 'Register',
-              )
-            ],
+            ),
           ),
         ),
       ),

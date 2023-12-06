@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
       child: InkWell(
         onTap: onClick,
         child: Container(
-          height: 60,
+          height: 42.5,
           width: double.infinity,
           decoration: BoxDecoration(
               color: color,

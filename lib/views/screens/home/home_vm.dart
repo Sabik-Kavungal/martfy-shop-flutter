@@ -76,7 +76,7 @@ class HomeVM extends ChangeNotifier {
     bool success = false;
     try {
       user = user.copyWith(name: user.name, email: user.email);
-      await apiProvider.put('profile', user.toJson());
+      await apiProvider.  put('profile', user.toJson());
       printx("password", user.toJson());
       success = true;
       notifyListeners();
