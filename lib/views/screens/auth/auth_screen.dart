@@ -3,7 +3,7 @@ import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/auth/register.screen.dart';
 
 class AuthScreen extends StatefulWidget {
-  static const route = 'auth-screen';
+  static const routeName = 'auth-screen';
   int initialPage;
   AuthScreen({
     Key? key,

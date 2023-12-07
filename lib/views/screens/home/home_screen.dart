@@ -9,6 +9,8 @@ import 'package:martfy/views/widgets/custom_textield.dart';
 
 import 'package:provider/provider.dart';
 
+import '../auth/auth_screen.dart';
+
 // HomeScreen.dart
 
 class HomeScreen extends StatelessWidget {
@@ -31,75 +33,98 @@ class HomeScreen extends StatelessWidget {
     return Drawer(
       child: Consumer<HomeVM>(
         builder: (context, authVM, child) {
-          return ListView(
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.blue, Colors.indigo],
+              ),
+            ),
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.white,
+                        child: const Icon(
+                          Icons.person,
+                          color: Colors.blue,
+                          size: 40,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        authVM.user?.name ?? "Guest",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        authVM.user?.email ?? "guest@example.com",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.white,
-                      child: const Icon(
-                        Icons.person,
-                        color: Colors.blue,
-                        size: 40,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      authVM.user?.name ?? "Guest",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      authVM.user?.email ?? "guest@example.com",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
+                ListTile(
+                  leading: Icon(Icons.lock, color: Colors.white),
+                  title: Text(
+                    'Change Password',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, ChangePasswordPage.routeName);
+                  },
                 ),
-              ),
-              ListTile(
-                leading: Icon(Icons.lock),
-                title: const Text('Change Password'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, ChangePasswordPage.routeName);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: const Text('Update Profile'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, UpdateProfilePage.routeName);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.logout),
-                title: const Text('Log Out'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Provider.of<AuthVM>(context, listen: false).logoutUser();
-                  Navigator.pushNamed(context, LoginScreen.routeName);
-                },
-              ),
-            ],
+                ListTile(
+                  leading: Icon(Icons.person, color: Colors.white),
+                  title: Text(
+                    'Update Profile',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, UpdateProfilePage.routeName);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout, color: Colors.white),
+                  title: Text(
+                    'Log Out',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Provider.of<AuthVM>(context, listen: false).logoutUser();
+
+                    Navigator.pushNamed(context, AuthScreen.routeName);
+
+                  },
+                ),
+              ],
+            ),
           );
         },
       ),
     );
   }
+
 
   Widget _buildHomeBody(BuildContext context) {
     return Consumer<HomeVM>(
@@ -238,7 +263,8 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {
                             Provider.of<AuthVM>(context, listen: false)
                                 .logoutUser();
-                            Navigator.pushNamed(context, LoginScreen.routeName);
+                            Navigator.pushNamed(context, AuthScreen.routeName);
+
                           },
                           style: ButtonStyle(
                             backgroundColor:
