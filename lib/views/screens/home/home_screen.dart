@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text("Welcome Home"),
       ),
       drawer: _buildDrawer(context),
-      body: _buildHomeBody(context),
+      body: _buildProfileBody(context),
     );
   }
 
@@ -114,7 +114,6 @@ class HomeScreen extends StatelessWidget {
                     Provider.of<AuthVM>(context, listen: false).logoutUser();
 
                     Navigator.pushNamed(context, AuthScreen.routeName);
-
                   },
                 ),
               ],
@@ -126,160 +125,121 @@ class HomeScreen extends StatelessWidget {
   }
 
 
-  Widget _buildHomeBody(BuildContext context) {
+  Widget _buildProfileBody(BuildContext context) {
     return Consumer<HomeVM>(
       builder: (context, authVM, child) {
         if (authVM.isLoading) {
-          return const Center(
-            child: SpinKitDoubleBounce(
-              color: Colors.red,
-              size: 78.0,
-            ),
+          return Center(
+            child: CircularProgressIndicator(),
           );
         } else if (authVM.user == null) {
-          return const Center(
+          return Center(
             child: Text('No data available.'),
           );
         } else {
-          return CustomRefresh(
-            onRefresh: () async {
-              await authVM.getProfile();
-            },
-            child: Stack(
-              alignment: Alignment.center,
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    color: Colors.blue.withOpacity(0.2),
+                CircleAvatar(
+                  radius: 80,
+                  backgroundColor: Colors.blue,
+                  child: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 80,
                   ),
                 ),
-                Positioned(
-                  top: 20,
-                  left: 20,
-                  right: 20,
-                  bottom: 20,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // New UI elements for the home page
-                        Text(
-                          'Welcome to Your App!',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        // E-commerce UI elements
-                        // Replace these with your specific e-commerce design
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add your e-commerce functionality here
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.orange),
-                          ),
-                          child: const Text(
-                            'Shop Now',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        // Existing profile UI elements
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.blue,
-                          child: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Hello, ${authVM.user?.name}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Email: ${authVM.user?.email}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, ChangePasswordPage.routeName);
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green),
-                          ),
-                          child: const Text(
-                            'Change Password',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, UpdateProfilePage.routeName);
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
-                          ),
-                          child: const Text(
-                            'Update Profile',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            Provider.of<AuthVM>(context, listen: false)
-                                .logoutUser();
-                            Navigator.pushNamed(context, AuthScreen.routeName);
+                const SizedBox(height: 20),
+                Text(
+                  '${authVM.user?.name}',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${authVM.user?.email}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
 
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.red),
-                          ),
-                          child: const Text(
-                            'Log Out',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                // Amazon-like Account Page Section
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.shopping_cart),
+                        title: Text('Orders'),
+                        onTap: () {
+                          // Handle Orders tap
+                        },
+                      ),
+                      _buildDivider(),
+                      ListTile(
+                        leading: Icon(Icons.credit_card),
+                        title: Text('Payment Methods'),
+                        onTap: () {
+                          // Handle Payment Methods tap
+                        },
+                      ),
+                      _buildDivider(),
+                      ListTile(
+                        leading: Icon(Icons.location_on),
+                        title: Text('Addresses'),
+                        onTap: () {
+                          // Handle Addresses tap
+                        },
+                      ),
+                      _buildDivider(),
+                      ListTile(
+                        leading: Icon(Icons.notifications),
+                        title: Text('Notifications'),
+                        onTap: () {
+                          // Handle Notifications tap
+                        },
+                      ),
+                      _buildDivider(),
+                      ListTile(
+                        leading: Icon(Icons.lock),
+                        title: Text('Update Password'),
+                        onTap: () {
+                          // Handle Update Password tap
+                          Navigator.pushNamed(
+                              context, ChangePasswordPage.routeName);
+                        },
+                      ),
+                      _buildDivider(),
+                      ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text('Update Profile'),
+                        onTap: () {
+                          // Handle Update Profile tap
+                          Navigator.pushNamed(
+                              context, UpdateProfilePage.routeName);
+                        },
+                      ),
+                      _buildDivider(),
+                      ListTile(
+                        leading: Icon(Icons.logout),
+                        title: Text('Log out'),
+                        onTap: () {
+                          Provider.of<AuthVM>(context, listen: false)
+                              .logoutUser();
+                          Navigator.pushNamed(context, AuthScreen.routeName);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -289,11 +249,15 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
+
+  Widget _buildDivider() {
+    return const Divider(
+      height: 0,
+      color: Colors.grey,
+    );
+  }
+
 }
-// UpdateProfilePage.dart
-
-// ChangePasswordPage.dart
-
 class ChangePasswordPage extends StatelessWidget {
   static const String routeName = '/change-password';
 

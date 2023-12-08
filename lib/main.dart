@@ -8,6 +8,8 @@ import 'package:martfy/views/screens/home/home_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
 import 'package:provider/provider.dart';
 
+import 'constants/them.dart';
+
 void main() async {
   await Hive.initFlutter();
   final token = LocalDatabaseService()
@@ -34,10 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MARTFY',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primarySwatch: Colors.blue,
-      ),
+   theme: CustomColorTheme.buildTheme(),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: saved != null ? HomeScreen() : AuthScreen(),
     );
