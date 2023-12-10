@@ -3,8 +3,10 @@ import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/auth/register.screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
 
+import '../models/product_model.dart';
 import '../views/screens/auth/auth_screen.dart';
 import '../views/screens/home/categoryDealsScreen.dart';
+import '../views/screens/home/product_detail.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -45,6 +47,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) =>  HomeScreenP(category:category),
+      );
+    case  ProductDetail.routeName:
+
+      var product = routeSettings.arguments as Product;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => ProductDetail(
+          product: product,
+        ),
       );
 
     default:
