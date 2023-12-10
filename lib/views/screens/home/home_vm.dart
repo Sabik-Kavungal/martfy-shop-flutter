@@ -5,6 +5,8 @@ import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/noetwork_repo.dart';
 import 'package:martfy/models/user_model.dart';
 
+import '../../../models/product_model.dart';
+
 class HomeVM extends ChangeNotifier {
   final ApiProvider apiProvider = ApiProvider();
 
@@ -15,8 +17,28 @@ class HomeVM extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _isProduct = false;
+  bool get isProduct => _isProduct;
+  List<Product> productList = [];
+
   HomeVM() {
     getProfile();
+  }
+
+  Future<void> getAllProducts({required String category}) async {
+    try {
+      _isProduct = true;
+      final response = await apiProvider.getList('products?category=$category');
+      productList = List<Product>.from(
+          response.map((productMap) => Product.fromJson(productMap)));
+      _logger.d('Products: $productList');
+    } catch (error, stackTrace) {
+      _logger.e("Error getting products: $error",
+          error: error, stackTrace: stackTrace);
+    } finally {
+      _isProduct = false;
+      notifyListeners();
+    }
   }
 
   Future<void> getProfile() async {
@@ -76,7 +98,7 @@ class HomeVM extends ChangeNotifier {
     bool success = false;
     try {
       user = user.copyWith(name: user.name, email: user.email);
-      await apiProvider.  put('profile', user.toJson());
+      await apiProvider.put('profile', user.toJson());
       printx("password", user.toJson());
       success = true;
       notifyListeners();

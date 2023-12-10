@@ -9,94 +9,50 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsAssetsGen {
-  const $AssetsAssetsGen();
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
 
-  /// File path: assets/assets/Appliances.jpg
+  /// File path: assets/images/amazon_in.png
+  AssetGenImage get amazonIn =>
+      const AssetGenImage('assets/images/amazon_in.png');
+
+  /// File path: assets/images/appliances.jpeg
   AssetGenImage get appliances =>
-      const AssetGenImage('assets/assets/Appliances.jpg');
+      const AssetGenImage('assets/images/appliances.jpeg');
 
-  /// File path: assets/assets/Books.jpg
-  AssetGenImage get books => const AssetGenImage('assets/assets/Books.jpg');
+  /// File path: assets/images/books.jpeg
+  AssetGenImage get books => const AssetGenImage('assets/images/books.jpeg');
 
-  /// File path: assets/assets/Fashion.jpg
-  AssetGenImage get fashion => const AssetGenImage('assets/assets/Fashion.jpg');
+  /// File path: assets/images/electronics.jpeg
+  AssetGenImage get electronics =>
+      const AssetGenImage('assets/images/electronics.jpeg');
 
-  /// File path: assets/assets/appliancerose.jpg
-  AssetGenImage get appliancerose =>
-      const AssetGenImage('assets/assets/appliancerose.jpg');
-
-  /// File path: assets/assets/bookswhite.jpg
-  AssetGenImage get bookswhite =>
-      const AssetGenImage('assets/assets/bookswhite.jpg');
-
-  /// File path: assets/assets/essentials.jpeg
+  /// File path: assets/images/essentials.jpeg
   AssetGenImage get essentials =>
-      const AssetGenImage('assets/assets/essentials.jpeg');
+      const AssetGenImage('assets/images/essentials.jpeg');
 
-  /// File path: assets/assets/essentialswhite.jpg
-  AssetGenImage get essentialswhite =>
-      const AssetGenImage('assets/assets/essentialswhite.jpg');
+  /// File path: assets/images/fashion.jpeg
+  AssetGenImage get fashion =>
+      const AssetGenImage('assets/images/fashion.jpeg');
 
-  /// File path: assets/assets/fashionred.jpg
-  AssetGenImage get fashionred =>
-      const AssetGenImage('assets/assets/fashionred.jpg');
-
-  /// File path: assets/assets/login.webp
-  AssetGenImage get login => const AssetGenImage('assets/assets/login.webp');
-
-  /// File path: assets/assets/login2.jpeg
-  AssetGenImage get login2 => const AssetGenImage('assets/assets/login2.jpeg');
-
-  /// File path: assets/assets/mobile.jpg
-  AssetGenImage get mobile => const AssetGenImage('assets/assets/mobile.jpg');
-
-  /// File path: assets/assets/mobileblue.jpg
-  AssetGenImage get mobileblue =>
-      const AssetGenImage('assets/assets/mobileblue.jpg');
-
-  /// File path: assets/assets/slider1.jpg
-  AssetGenImage get slider1 => const AssetGenImage('assets/assets/slider1.jpg');
-
-  /// File path: assets/assets/slider2.jpeg
-  AssetGenImage get slider2 =>
-      const AssetGenImage('assets/assets/slider2.jpeg');
-
-  /// File path: assets/assets/slider3.jpg
-  AssetGenImage get slider3 => const AssetGenImage('assets/assets/slider3.jpg');
-
-  /// File path: assets/assets/slider5.jpg
-  AssetGenImage get slider5 => const AssetGenImage('assets/assets/slider5.jpg');
-
-  /// File path: assets/assets/slider6.jpg
-  AssetGenImage get slider6 => const AssetGenImage('assets/assets/slider6.jpg');
+  /// File path: assets/images/mobiles.jpeg
+  AssetGenImage get mobiles =>
+      const AssetGenImage('assets/images/mobiles.jpeg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
-        appliances,
-        books,
-        fashion,
-        appliancerose,
-        bookswhite,
-        essentials,
-        essentialswhite,
-        fashionred,
-        login,
-        login2,
-        mobile,
-        mobileblue,
-        slider1,
-        slider2,
-        slider3,
-        slider5,
-        slider6
-      ];
+  List<AssetGenImage> get values =>
+      [amazonIn, appliances, books, electronics, essentials, fashion, mobiles];
 }
 
 class Assets {
   Assets._();
 
-  static const $AssetsAssetsGen assets = $AssetsAssetsGen();
+  static const String applepay = 'assets/applepay.json';
+  static const String gpay = 'assets/gpay.json';
+  static const $AssetsImagesGen images = $AssetsImagesGen();
+
+  /// List of all assets
+  List<String> get values => [applepay, gpay];
 }
 
 class AssetGenImage {

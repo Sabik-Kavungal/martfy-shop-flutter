@@ -4,6 +4,7 @@ import 'package:martfy/constants/commen_variable.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
+import 'package:martfy/views/screens/home/topCategory.dart';
 import 'package:martfy/views/widgets/custom_refresh.dart';
 import 'package:martfy/views/widgets/custom_textield.dart';
 
@@ -52,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+
                       CircleAvatar(
                         radius: 40,
                         backgroundColor: Colors.white,
@@ -142,6 +144,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                TopCategories(),
                 CircleAvatar(
                   radius: 80,
                   backgroundColor: Colors.blue,

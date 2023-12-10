@@ -73,9 +73,11 @@ class ApiProvider {
 
   Future<List<dynamic>> getList(String endpoint) async {
     try {
+      final boxOpen = await db.openBox("token");
+      final a = db.fromDb(boxOpen, 'key');
       final response = await http.get(
-        Uri.parse('$baseUrl/$endpoint'),
-        headers: {'Content-Type': 'application/json'},
+        Uri.parse('$baseUrl/api/$endpoint'),
+        headers: {'Content-Type': 'application/json',   'x-auth-token': a,},
       );
       print('saikkkkkkkkk: ${response.statusCode}');
 

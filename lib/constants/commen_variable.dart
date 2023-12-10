@@ -71,23 +71,23 @@ class GlobalVariables {
   static const List<Map<String, String>> categoryImages = [
     {
       'title': 'Mobiles',
-      'image': 'assets/assets/mobileblue.jpg',
+      'image': 'assets/images/mobiles.jpeg',
     },
     {
       'title': 'Essentials',
-      'image': 'assets/assets/essentialswhite.jpg',
+      'image': 'assets/images/essentials.jpeg',
     },
     {
       'title': 'Appliances',
-      'image': 'assets/assets/appliancerose.jpg',
+      'image': 'assets/images/appliances.jpeg',
     },
     {
       'title': 'Books',
-      'image': 'assets/assets/bookswhite.jpg',
+      'image': 'assets/images/books.jpeg',
     },
     {
       'title': 'Fashion',
-      'image': 'assets/assets/fashionred.jpg',
+      'image': 'assets/images/fashion.jpeg',
     },
   ];
 }
