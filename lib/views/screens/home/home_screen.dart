@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:martfy/constants/commen_variable.dart';
+import 'package:martfy/views/screens/admin/addProduct.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
@@ -53,7 +54,6 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       CircleAvatar(
                         radius: 40,
                         backgroundColor: Colors.white,
@@ -106,6 +106,18 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading:
+                      Icon(Icons.admin_panel_settings, color: Colors.white),
+                  title: Text(
+                    'Admin',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, AddProductScreen.routeName);
+                  },
+                ),
+                ListTile(
                   leading: Icon(Icons.logout, color: Colors.white),
                   title: Text(
                     'Log Out',
@@ -125,7 +137,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildProfileBody(BuildContext context) {
     return Consumer<HomeVM>(
@@ -259,8 +270,8 @@ class HomeScreen extends StatelessWidget {
       color: Colors.grey,
     );
   }
-
 }
+
 class ChangePasswordPage extends StatelessWidget {
   static const String routeName = '/change-password';
 

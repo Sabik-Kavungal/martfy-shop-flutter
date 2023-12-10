@@ -62,20 +62,25 @@ class _HomeScreenPState extends State<HomeScreenP> {
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: 130,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                      width: 0.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                    image: DecorationImage(
-                                      image: NetworkImage(product.images![0]),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
+                                product.images != null &&
+                                        product.images!.isNotEmpty
+                                    ? Container(
+                                        height: 130,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                            width: 0.5,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                product.images![0]),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox.shrink(),
                                 SizedBox(height: 8),
                                 Text(
                                   product.name ?? '',

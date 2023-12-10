@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../constants/commen_variable.dart';
 import '../../../models/product_model.dart';
 
 import 'package:flutter/material.dart';
+
+import 'home_vm.dart';
 
 class ProductDetail extends StatelessWidget {
   static const String routeName = '/product-details';
@@ -19,11 +23,11 @@ class ProductDetail extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.network(
+      product.images != null && product.images!.isNotEmpty ?  Image.network(
             product.images![0] ?? '', // Use the product image URL
             height: 200,
             fit: BoxFit.cover,
-          ),
+          ) : SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.all(8),
             child: Text(
@@ -34,6 +38,7 @@ class ProductDetail extends StatelessWidget {
               ),
             ),
           ),
+          Text(product.id ?? '', style: TextStyle(color: Colors.blue)),
           Padding(
             padding: const EdgeInsets.all(8),
             child: RichText(
@@ -69,8 +74,15 @@ class ProductDetail extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
-                // Implement your add to cart logic here
-                // For example, you can use a provider to manage the cart state
+                Provider.of<HomeVM>(context, listen: false).addToCart(
+                    (success) {
+                  if (success) {
+                    Navigator.pop(context);
+                    xmToast('Successfully added to cart', Colors.green);
+                  } else {
+                    xmToast('Change add to cart', Colors.red);
+                  }
+                }, product);
               },
               child: Text('Add to Cart'),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:martfy/views/screens/admin/addProduct.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/auth/register.screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
@@ -20,42 +21,47 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => RegistrationScreen(),
       );
-       case HomeScreen.routeName:
+    case HomeScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) =>  HomeScreen(),
+        builder: (_) => HomeScreen(),
       );
-       case ChangePasswordPage.routeName:
+    case ChangePasswordPage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) =>  ChangePasswordPage(),
+        builder: (_) => ChangePasswordPage(),
       );
-       case UpdateProfilePage.routeName:
+    case UpdateProfilePage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) =>  UpdateProfilePage(),
+        builder: (_) => UpdateProfilePage(),
       );
 
     case AuthScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) =>  AuthScreen(),
+        builder: (_) => AuthScreen(),
       );
 
     case HomeScreenP.routeName:
       var category = routeSettings.arguments as String;
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) =>  HomeScreenP(category:category),
+        builder: (_) => HomeScreenP(category: category),
       );
-    case  ProductDetail.routeName:
-
+    case ProductDetail.routeName:
       var product = routeSettings.arguments as Product;
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => ProductDetail(
           product: product,
         ),
+      );
+
+    case AddProductScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AddProductScreen(),
       );
 
     default:
