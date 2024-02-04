@@ -37,10 +37,10 @@ class UserProfileBody extends StatelessWidget {
              
                   CircleAvatar(
                     radius: 80,
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.grey[200],
                     child: const Icon(
                       Icons.person,
-                      color: Colors.white,
+                      color: Colors.red,
                       size: 80,
                     ),
                   ),
@@ -127,7 +127,7 @@ class UserProfileBody extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: Colors.blue,
+        color: Colors.red,
         size: 28,
       ),
       title: Text(

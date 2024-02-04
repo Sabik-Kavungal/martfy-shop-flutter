@@ -159,6 +159,18 @@ class HomeVM extends ChangeNotifier {
     }
   }
 
+  Future<void> increment({required String id}) async {
+    try {
+      await apiProvider.incre('increment-cart/$id');
+
+      printx("add to cart---------------------", product.toJson());
+
+      notifyListeners();
+    } catch (error, stackTrace) {
+      _logger.e("Error: $error", error: error, stackTrace: stackTrace);
+    } finally {}
+  }
+
   Future<void> getCarts() async {
     try {
       _isProduct = true;
