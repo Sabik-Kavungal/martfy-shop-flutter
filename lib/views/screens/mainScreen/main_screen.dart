@@ -11,7 +11,7 @@ class MainScreenxxx extends StatelessWidget {
   final List<Widget> pages = [
     HomeScreen(),
     ShoppingCartList(),
-    HomeScreen(),
+  
       UserProfileBody(),
   ];
 
@@ -40,13 +40,10 @@ class MainScreenxxx extends StatelessWidget {
               icon: Icon(Icons.shopping_cart),
               label: 'Cart',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Orders',
-            ),
+           
               BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Orders',
+              label: 'Profile',
             ),
             
           ],

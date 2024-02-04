@@ -13,7 +13,7 @@ class Product with _$Product {
     List<String>? images,
     String? category,
     double? price,
-    String? id,
+   @JsonKey(name:"_id") String? id,
     List<Rating>? rating,
   }) = _Product;
 

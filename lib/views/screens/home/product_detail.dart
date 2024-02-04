@@ -48,7 +48,7 @@ class ProductDetail extends StatelessWidget {
                 child: Icon(
                   Icons.shopping_cart, // Replace with your desired icon
                   size: 60,
-                  color: Colors.blue,
+                  color: Colors.red,
                 ),
               ),
             ),
@@ -78,7 +78,7 @@ class ProductDetail extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Colors.red,
                   ),
                 ),
                 ElevatedButton(

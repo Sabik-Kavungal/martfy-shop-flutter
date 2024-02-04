@@ -48,6 +48,47 @@ class ApiProvider {
       throw Exception('Failed to make API call: $error');
     }
   }
+   Future<Map<String, dynamic>> postToken(
+      String endpoint, Map<String, dynamic> body) async {
+    try {
+      final boxOpen = await db.openBox("token");
+      final a = db.fromDb(boxOpen, 'key');
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/$endpoint'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': a,
+        },
+        body: jsonEncode(body),
+      );
+
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Successful response
+        return jsonDecode(response.body);
+      } else if (response.statusCode == 400) {
+        // Handle Bad Request (400)
+        throw Exception('Bad Request: ${response.body}');
+      } else if (response.statusCode == 401) {
+        // Handle Unauthorized y6ji6tf (401)
+        throw Exception('Unauthorized: ${response.body}');
+      } else if (response.statusCode == 404) {
+        // Handle Not Found (404)
+        throw Exception('Not Found: ${response.body}');
+      } else if (response.statusCode == 500) {
+        // Handle Internal Server Error (500)
+        throw Exception('Internal Server Error: ${response.body}');
+      } else {
+        // Handle other HTTP errors here.
+        throw Exception('Failed to make API call: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      throw Exception('Failed to make API call: $error');
+    }
+  }
    Future<Map<String, dynamic>> postAdmin(
       String endpoint, Map<String, dynamic> body) async {
     try {

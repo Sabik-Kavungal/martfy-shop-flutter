@@ -41,12 +41,12 @@ class _ShoppingCartCardState extends State<ShoppingCartCard> {
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 Icons.shopping_cart,
-                color: Colors.white,
+                color: Colors.red,
               ),
             ),
             SizedBox(
@@ -60,7 +60,7 @@ class _ShoppingCartCardState extends State<ShoppingCartCard> {
                     widget.productName,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   SizedBox(height: 4),
@@ -122,7 +122,7 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shopping Cart'),
+        title: Text('Cart Page'),
       ),
       body: ListView.builder(
         itemCount: cartItems.length,

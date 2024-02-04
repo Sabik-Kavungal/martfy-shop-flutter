@@ -142,9 +142,9 @@ class HomeVM extends ChangeNotifier {
     bool success = false;
     try {
       product = product.copyWith(id: product.id);
-      final res = await apiProvider.post('add-to-cart', {'id': product.id});
+      final res = await apiProvider.postToken('add-to-cart', {'id': product.id});
       final cart = res['cart'];
-      printx("add to cart", product.toJson());
+      printx("add to cart---------------------", product.toJson());
       success = true;
       notifyListeners();
       return cart;

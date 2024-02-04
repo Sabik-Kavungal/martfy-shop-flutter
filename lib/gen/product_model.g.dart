@@ -15,7 +15,7 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
       category: json['category'] as String?,
       price: (json['price'] as num?)?.toDouble(),
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       rating: (json['rating'] as List<dynamic>?)
           ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -36,7 +36,7 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) {
   writeNotNull('images', instance.images);
   writeNotNull('category', instance.category);
   writeNotNull('price', instance.price);
-  writeNotNull('id', instance.id);
+  writeNotNull('_id', instance.id);
   writeNotNull('rating', instance.rating?.map((e) => e.toJson()).toList());
   return val;
 }

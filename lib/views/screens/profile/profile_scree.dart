@@ -10,6 +10,14 @@ class UserProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+         appBar: AppBar(
+        title: Text(
+          'Profile Page',
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
       body: Consumer<HomeVM>(
         builder: (context, authVM, child) {
           if (authVM.isLoading) {

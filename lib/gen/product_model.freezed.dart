@@ -26,6 +26,7 @@ mixin _$Product {
   List<String>? get images => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
+  @JsonKey(name: "_id")
   String? get id => throw _privateConstructorUsedError;
   List<Rating>? get rating => throw _privateConstructorUsedError;
 
@@ -46,7 +47,7 @@ abstract class $ProductCopyWith<$Res> {
       List<String>? images,
       String? category,
       double? price,
-      String? id,
+      @JsonKey(name: "_id") String? id,
       List<Rating>? rating});
 }
 
@@ -123,7 +124,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       List<String>? images,
       String? category,
       double? price,
-      String? id,
+      @JsonKey(name: "_id") String? id,
       List<Rating>? rating});
 }
 
@@ -194,7 +195,7 @@ class _$ProductImpl implements _Product {
       final List<String>? images,
       this.category,
       this.price,
-      this.id,
+      @JsonKey(name: "_id") this.id,
       final List<Rating>? rating})
       : _images = images,
         _rating = rating;
@@ -223,6 +224,7 @@ class _$ProductImpl implements _Product {
   @override
   final double? price;
   @override
+  @JsonKey(name: "_id")
   final String? id;
   final List<Rating>? _rating;
   @override
@@ -292,7 +294,7 @@ abstract class _Product implements Product {
       final List<String>? images,
       final String? category,
       final double? price,
-      final String? id,
+      @JsonKey(name: "_id") final String? id,
       final List<Rating>? rating}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
@@ -310,6 +312,7 @@ abstract class _Product implements Product {
   @override
   double? get price;
   @override
+  @JsonKey(name: "_id")
   String? get id;
   @override
   List<Rating>? get rating;
