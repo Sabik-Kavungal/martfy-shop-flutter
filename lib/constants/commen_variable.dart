@@ -67,27 +67,49 @@ class GlobalVariables {
     "assets/assets/slider5.jpg",
     "assets/assets/slider6.jpg",
   ];
+static const List<Map<String, dynamic>> categoryImages = [
+  {
+    'title': 'Mobiles',
+    'icon': Icons.mobile_friendly,
+  },
+  {
+    'title': 'Essentials',
+    'icon': Icons.shopping_bag,
+  },
+  {
+    'title': 'Appliances',
+    'icon': Icons.kitchen,
+  },
+  {
+    'title': 'Books',
+    'icon': Icons.book,
+  },
+  {
+    'title': 'Fashion',
+    'icon': Icons.accessibility,
+  },
+];
 
-  static const List<Map<String, String>> categoryImages = [
-    {
-      'title': 'Mobiles',
-      'image': 'assets/images/mobiles.jpeg',
-    },
-    {
-      'title': 'Essentials',
-      'image': 'assets/images/essentials.jpeg',
-    },
-    {
-      'title': 'Appliances',
-      'image': 'assets/images/appliances.jpeg',
-    },
-    {
-      'title': 'Books',
-      'image': 'assets/images/books.jpeg',
-    },
-    {
-      'title': 'Fashion',
-      'image': 'assets/images/fashion.jpeg',
-    },
-  ];
+  // static const List<Map<String, String>> categoryImages = [
+  //   {
+  //     'title': 'Mobiles',
+  //     'image': 'assets/images/mobiles.jpeg',
+  //   },
+  //   {
+  //     'title': 'Essentials',
+  //     'image': 'assets/images/essentials.jpeg',
+  //   },
+  //   {
+  //     'title': 'Appliances',
+  //     'image': 'assets/images/appliances.jpeg',
+  //   },
+  //   {
+  //     'title': 'Books',
+  //     'image': 'assets/images/books.jpeg',
+  //   },
+  //   {
+  //     'title': 'Fashion',
+  //     'image': 'assets/images/fashion.jpeg',
+  //   },
+  // ];
 }

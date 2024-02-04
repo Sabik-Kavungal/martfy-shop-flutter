@@ -15,262 +15,368 @@ import '../auth/auth_screen.dart';
 
 // HomeScreen.dart
 
+
+
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home-screen';
-
-  const HomeScreen({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome Home"),
+        title: Text(
+          'My Shop',
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
       ),
-      drawer: _buildDrawer(context),
-      body: _buildProfileBody(context),
-    );
-  }
-
-  Widget _buildDrawer(BuildContext context) {
-    return Drawer(
-      child: Consumer<HomeVM>(
-        builder: (context, authVM, child) {
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.blue, Colors.indigo],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Categories',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.white,
-                        child: const Icon(
-                          Icons.person,
-                          color: Colors.blue,
-                          size: 40,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        authVM.user?.name ?? "Guest",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        authVM.user?.email ?? "guest@example.com",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.lock, color: Colors.white),
-                  title: Text(
-                    'Change Password',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, ChangePasswordPage.routeName);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.person, color: Colors.white),
-                  title: Text(
-                    'Update Profile',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, UpdateProfilePage.routeName);
-                  },
-                ),
-                ListTile(
-                  leading:
-                      Icon(Icons.admin_panel_settings, color: Colors.white),
-                  title: Text(
-                    'Admin',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, AddProductScreen.routeName);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.logout, color: Colors.white),
-                  title: Text(
-                    'Log Out',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Provider.of<AuthVM>(context, listen: false).logoutUser();
-
-                    Navigator.pushNamed(context, AuthScreen.routeName);
-                  },
-                ),
-              ],
+            SizedBox(height: 16),
+           TopCategories(),
+            SizedBox(height: 32),
+            Text(
+              'All Products',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
-          );
-        },
+            SizedBox(height: 16),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 4.3,
+                  mainAxisSpacing: 4.3,
+                ),
+                itemCount: 10, // Replace with your actual product count
+                itemBuilder: (context, index) {
+                  // Replace with your product card widget
+                  return InkWell(onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductScreen()));
+                  },child: _buildProductCard());
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildProfileBody(BuildContext context) {
-    return Consumer<HomeVM>(
-      builder: (context, authVM, child) {
-        if (authVM.isLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (authVM.user == null) {
-          return Center(
-            child: Text('No data available.'),
-          );
-        } else {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TopCategories(),
-                CircleAvatar(
-                  radius: 80,
-                  backgroundColor: Colors.blue,
-                  child: const Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 80,
+  Widget _buildCategoryCard(String categoryName, IconData icon, Color color) {
+    return Container(
+      width: 120,
+       decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.8),
+                border: Border.all(color: Colors.grey,width: 0.2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                   
+                  //  offset: Offset(0, 3),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  '${authVM.user?.name}',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  '${authVM.user?.email}',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-
-                // Amazon-like Account Page Section
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.shopping_cart),
-                        title: Text('Orders'),
-                        onTap: () {
-                          // Handle Orders tap
-                        },
-                      ),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.credit_card),
-                        title: Text('Payment Methods'),
-                        onTap: () {
-                          // Handle Payment Methods tap
-                        },
-                      ),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.location_on),
-                        title: Text('Addresses'),
-                        onTap: () {
-                          // Handle Addresses tap
-                        },
-                      ),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.notifications),
-                        title: Text('Notifications'),
-                        onTap: () {
-                          // Handle Notifications tap
-                        },
-                      ),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.lock),
-                        title: Text('Update Password'),
-                        onTap: () {
-                          // Handle Update Password tap
-                          Navigator.pushNamed(
-                              context, ChangePasswordPage.routeName);
-                        },
-                      ),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.edit),
-                        title: Text('Update Profile'),
-                        onTap: () {
-                          // Handle Update Profile tap
-                          Navigator.pushNamed(
-                              context, UpdateProfilePage.routeName);
-                        },
-                      ),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.logout),
-                        title: Text('Log out'),
-                        onTap: () {
-                          Provider.of<AuthVM>(context, listen: false)
-                              .logoutUser();
-                          Navigator.pushNamed(context, AuthScreen.routeName);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 36,
+          ),
+          SizedBox(height: 8),
+          Text(
+            categoryName,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
             ),
-          );
-        }
-      },
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildDivider() {
-    return const Divider(
-      height: 0,
-      color: Colors.grey,
+  Widget _buildProductCard() {
+    // Replace with your product card widget
+    return Container(
+       decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(3.6),
+                border: Border.all(color: Colors.grey,width: 0.4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                   
+                  //  offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.shopping_cart,
+            size: 50,
+            color: Colors.blue,
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Product Name',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+          Text(
+            'Price: \$50',
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+class ProductScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Product Details',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.shopping_cart, // Replace with your desired icon
+                  size: 60,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Product Name',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 6),
+            Text(
+              'Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$50.00',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add to cart logic
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                  child: Text(
+                    'Add to Cart',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+// class HomeScreen extends StatelessWidget {
+//   static const String routeName = '/home-screen';
+
+//   const HomeScreen({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Welcome Home"),
+//       ),
+//       drawer: _buildDrawer(context),
+//       body:\
+//     );
+//   }
+
+//   Widget _buildDrawer(BuildContext context) {
+//     return Drawer(
+//       child: Consumer<HomeVM>(
+//         builder: (context, authVM, child) {
+//           return Container(
+//             decoration: BoxDecoration(
+//               gradient: LinearGradient(
+//                 begin: Alignment.topLeft,
+//                 end: Alignment.bottomRight,
+//                 colors: [Colors.blue, Colors.indigo],
+//               ),
+//             ),
+//             child: ListView(
+//               padding: EdgeInsets.zero,
+//               children: [
+//                 DrawerHeader(
+//                   decoration: BoxDecoration(
+//                     color: Colors.transparent,
+//                   ),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       CircleAvatar(
+//                         radius: 40,
+//                         backgroundColor: Colors.white,
+//                         child: const Icon(
+//                           Icons.person,
+//                           color: Colors.blue,
+//                           size: 40,
+//                         ),
+//                       ),
+//                       const SizedBox(height: 10),
+//                       Text(
+//                         authVM.user?.name ?? "Guest",
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                       const SizedBox(height: 5),
+//                       Text(
+//                         authVM.user?.email ?? "guest@example.com",
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 14,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 ListTile(
+//                   leading: Icon(Icons.lock, color: Colors.white),
+//                   title: Text(
+//                     'Change Password',
+//                     style: TextStyle(color: Colors.white),
+//                   ),
+//                   onTap: () {
+//                     Navigator.pop(context);
+//                     Navigator.pushNamed(context, ChangePasswordPage.routeName);
+//                   },
+//                 ),
+//                 ListTile(
+//                   leading: Icon(Icons.person, color: Colors.white),
+//                   title: Text(
+//                     'Update Profile',
+//                     style: TextStyle(color: Colors.white),
+//                   ),
+//                   onTap: () {
+//                     Navigator.pop(context);
+//                     Navigator.pushNamed(context, UpdateProfilePage.routeName);
+//                   },
+//                 ),
+//                 ListTile(
+//                   leading:
+//                       Icon(Icons.admin_panel_settings, color: Colors.white),
+//                   title: Text(
+//                     'Admin',
+//                     style: TextStyle(color: Colors.white),
+//                   ),
+//                   onTap: () {
+//                     Navigator.pop(context);
+//                     Navigator.pushNamed(context, AddProductScreen.routeName);
+//                   },
+//                 ),
+//                 ListTile(
+//                   leading: Icon(Icons.logout, color: Colors.white),
+//                   title: Text(
+//                     'Log Out',
+//                     style: TextStyle(color: Colors.white),
+//                   ),
+//                   onTap: () {
+//                     Navigator.pop(context);
+//                     Provider.of<AuthVM>(context, listen: false).logoutUser();
+
+//                     Navigator.pushNamed(context, AuthScreen.routeName);
+//                   },
+//                 ),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+
+// }
 
 class ChangePasswordPage extends StatelessWidget {
   static const String routeName = '/change-password';

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:martfy/helper/localDB.dart';
@@ -6,6 +8,8 @@ import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/auth_screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
+import 'package:martfy/views/screens/mainScreen/mainVM.dart';
+import 'package:martfy/views/screens/mainScreen/main_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/them.dart';
@@ -19,6 +23,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => AuthVM(),
         ),
+        ChangeNotifierProvider(create: (context) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => HomeVM())
       ],
       child: MyApp(
@@ -36,9 +41,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MARTFY',
-   theme: CustomColorTheme.buildTheme(),
+      theme: CustomColorTheme.buildTheme(),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: saved != null ? HomeScreen() : AuthScreen(),
+      home: saved != null ? MainScreenxxx() : AuthScreen(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:martfy/views/screens/admin/addProduct.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/auth/register.screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
+import 'package:martfy/views/screens/mainScreen/main_screen.dart';
 
 import '../models/product_model.dart';
 import '../views/screens/auth/auth_screen.dart';
@@ -62,6 +63,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const AddProductScreen(),
+      );
+
+  case MainScreenxxx.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) =>  MainScreenxxx(),
       );
 
     default:
