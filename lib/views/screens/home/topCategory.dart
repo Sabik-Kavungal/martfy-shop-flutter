@@ -16,7 +16,6 @@ class TopCategories extends StatelessWidget {
     return SizedBox(
       height: 70,
       child: ListView.builder(
-        
         itemCount: GlobalVariables.categoryImages.length,
         scrollDirection: Axis.horizontal,
         itemExtent: 90,
@@ -31,12 +30,12 @@ class TopCategories extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8.2),
-                border: Border.all(color: Colors.grey,width: 0.4),
+                border: Border.all(color: Colors.grey, width: 0.4),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
-                   
-                  //  offset: Offset(0, 3),
+
+                    //  offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -48,7 +47,7 @@ class TopCategories extends StatelessWidget {
                     size: 35,
                     color: Colors.red,
                   ),
-                const  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     GlobalVariables.categoryImages[index]['title']!,
                     style: const TextStyle(

@@ -9,70 +9,79 @@ import 'package:flutter/material.dart';
 import 'home_vm.dart';
 
 class ProductDetail extends StatelessWidget {
-  static const String routeName = '/product-details';
+   static const String routeName = '/product-details';
   final Product product;
 
-  const ProductDetail({Key? key, required this.product}) : super(key: key);
-
+  const ProductDetail({super.key, required this.product});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Details'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-      product.images != null && product.images!.isNotEmpty ?  Image.network(
-            product.images![0] ?? '', // Use the product image URL
-            height: 200,
-            fit: BoxFit.cover,
-          ) : SizedBox.shrink(),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              product.name ?? '',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+        title: Text(
+         'Product Details',
+          style: TextStyle(
+            fontSize: 18,
           ),
-          Text(product.id ?? '', style: TextStyle(color: Colors.blue)),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: RichText(
-              text: TextSpan(
-                text: 'Deal Price: ',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                children: [
-                  TextSpan(
-                    text: '\$${product.price ?? ''}',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w500,
-                    ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
+              child: Center(
+                child: Icon(
+                  Icons.shopping_cart, // Replace with your desired icon
+                  size: 60,
+                  color: Colors.blue,
+                ),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(product.description ?? ''),
-          ),
-          Container(
-            color: Colors.black12,
-            height: 2,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
+            SizedBox(height: 12),
+            Text(
+              product.name ??'',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 6),
+            Text(
+             product.description ?? '',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$${product.price}',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+                ElevatedButton(
               onPressed: () {
                 Provider.of<HomeVM>(context, listen: false).addToCart(
                     (success) {
@@ -86,8 +95,10 @@ class ProductDetail extends StatelessWidget {
               },
               child: Text('Add to Cart'),
             ),
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
