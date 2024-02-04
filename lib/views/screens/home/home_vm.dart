@@ -27,13 +27,15 @@ class HomeVM extends ChangeNotifier {
   bool get isProduct => _isProduct;
   List<Product> productList = [];
 
-    List<Product> productListAll = [];
+  List<Product> productListAll = [];
+  List<Product> cartsList = [];
 
   Product product = Product();
 
   HomeVM() {
     getProfile();
     getAllProductsAll();
+    getCarts();
   }
 
   Future<void> getAllProducts({required String category}) async {
@@ -52,7 +54,7 @@ class HomeVM extends ChangeNotifier {
     }
   }
 
-   Future<void> getAllProductsAll() async {
+  Future<void> getAllProductsAll() async {
     try {
       _isProduct = true;
       final response = await apiProvider.getList('products/all');
@@ -142,7 +144,8 @@ class HomeVM extends ChangeNotifier {
     bool success = false;
     try {
       product = product.copyWith(id: product.id);
-      final res = await apiProvider.postToken('add-to-cart', {'id': product.id});
+      final res =
+          await apiProvider.postToken('add-to-cart', {'id': product.id});
       final cart = res['cart'];
       printx("add to cart---------------------", product.toJson());
       success = true;
@@ -153,6 +156,22 @@ class HomeVM extends ChangeNotifier {
     } finally {
       callback(success);
       _logger.d("Response: $success");
+    }
+  }
+
+  Future<void> getCarts() async {
+    try {
+      _isProduct = true;
+      final response = await apiProvider.getList('get-cart');
+      cartsList = List<Product>.from(response
+          .map((productMap) => Product.fromJson(productMap['product'])));
+      _logger.d('Products: $cartsList');
+    } catch (error, stackTrace) {
+      _logger.e("Error getting products: $error",
+          error: error, stackTrace: stackTrace);
+    } finally {
+      _isProduct = false;
+      notifyListeners();
     }
   }
 

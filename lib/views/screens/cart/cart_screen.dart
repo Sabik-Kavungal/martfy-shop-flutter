@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:martfy/views/screens/home/home_vm.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingCartCard extends StatefulWidget {
   final String productName;
@@ -21,18 +23,18 @@ class _ShoppingCartCardState extends State<ShoppingCartCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-     decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(3.6),
-                  border: Border.all(color: Colors.grey,width: 0.4),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                     
-                    //  offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(3.6),
+        border: Border.all(color: Colors.grey, width: 0.4),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+
+            //  offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -78,11 +80,7 @@ class _ShoppingCartCardState extends State<ShoppingCartCard> {
               children: [
                 IconButton(
                   icon: Icon(Icons.remove),
-                  onPressed: () {
-                    if (widget.quantity > 1) {
-                      widget.onQuantityChanged(widget.quantity - 1);
-                    }
-                  },
+                  onPressed: () {},
                 ),
                 Text(
                   widget.quantity.toString(),
@@ -112,42 +110,33 @@ class ShoppingCartList extends StatefulWidget {
 }
 
 class _ShoppingCartListState extends State<ShoppingCartList> {
-  List<CartItem> cartItems = [
-    CartItem('Product 1', 19.99, 2),
-    CartItem('Product 2', 29.99, 1),
-    // Add more items as needed
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart Page'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Provider.of<HomeVM>(context, listen: false).getCarts();
+              },
+              icon: Icon(Icons.online_prediction))
+        ],
       ),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          return ShoppingCartCard(
-            productName: cartItems[index].name,
-            price: cartItems[index].price,
-            quantity: cartItems[index].quantity,
-            onQuantityChanged: (newQuantity) {
-              // Update the quantity in the cart
-              setState(() {
-                cartItems[index].quantity = newQuantity;
-              });
-            },
-          );
-        },
-      ),
+      body: Consumer<HomeVM>(builder: (context, s, child) {
+        return ListView.builder(
+          itemCount: s.cartsList.length,
+          itemBuilder: (context, index) {
+            final as = s.cartsList[index];
+            return ShoppingCartCard(
+              productName: as.name ?? 'we',
+              price: as.price ?? 0,
+              quantity: int.parse(as.quantity.toString()),
+              onQuantityChanged: (newQuantity) {},
+            );
+          },
+        );
+      }),
     );
   }
-}
-
-class CartItem {
-  final String name;
-  final double price;
-  int quantity;
-
-  CartItem(this.name, this.price, this.quantity);
 }

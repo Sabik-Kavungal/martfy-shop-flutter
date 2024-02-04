@@ -7,13 +7,13 @@ part '../gen/product_model.g.dart';
 @freezed
 class Product with _$Product {
   const factory Product({
-    String? name,
+    @JsonKey(name: "name") String? name,
     String? description,
     double? quantity,
     List<String>? images,
     String? category,
     double? price,
-   @JsonKey(name:"_id") String? id,
+    @JsonKey(name: "_id") String? id,
     List<Rating>? rating,
   }) = _Product;
 

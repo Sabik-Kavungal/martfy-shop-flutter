@@ -20,6 +20,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Product {
+  @JsonKey(name: "name")
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   double? get quantity => throw _privateConstructorUsedError;
@@ -41,7 +42,7 @@ abstract class $ProductCopyWith<$Res> {
       _$ProductCopyWithImpl<$Res, Product>;
   @useResult
   $Res call(
-      {String? name,
+      {@JsonKey(name: "name") String? name,
       String? description,
       double? quantity,
       List<String>? images,
@@ -118,7 +119,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? name,
+      {@JsonKey(name: "name") String? name,
       String? description,
       double? quantity,
       List<String>? images,
@@ -189,7 +190,7 @@ class __$$ProductImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProductImpl implements _Product {
   const _$ProductImpl(
-      {this.name,
+      {@JsonKey(name: "name") this.name,
       this.description,
       this.quantity,
       final List<String>? images,
@@ -204,6 +205,7 @@ class _$ProductImpl implements _Product {
       _$$ProductImplFromJson(json);
 
   @override
+  @JsonKey(name: "name")
   final String? name;
   @override
   final String? description;
@@ -288,7 +290,7 @@ class _$ProductImpl implements _Product {
 
 abstract class _Product implements Product {
   const factory _Product(
-      {final String? name,
+      {@JsonKey(name: "name") final String? name,
       final String? description,
       final double? quantity,
       final List<String>? images,
@@ -300,6 +302,7 @@ abstract class _Product implements Product {
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
   @override
+  @JsonKey(name: "name")
   String? get name;
   @override
   String? get description;
