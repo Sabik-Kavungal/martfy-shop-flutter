@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:martfy/views/screens/cart/cart_screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
 import 'package:martfy/views/screens/home/topCategory.dart';
 import 'package:martfy/views/screens/mainScreen/mainVM.dart';
@@ -9,7 +10,7 @@ class MainScreenxxx extends StatelessWidget {
 
   final List<Widget> pages = [
     HomeScreen(),
-    HomeScreen(),
+    ShoppingCartList(),
     HomeScreen(),
       UserProfileBody(),
   ];
