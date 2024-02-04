@@ -5,6 +5,7 @@ import 'package:martfy/views/screens/admin/addProduct.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
+import 'package:martfy/views/screens/home/product_detail.dart';
 import 'package:martfy/views/screens/home/topCategory.dart';
 import 'package:martfy/views/widgets/custom_refresh.dart';
 import 'package:martfy/views/widgets/custom_textield.dart';
@@ -58,19 +59,33 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 4.3,
-                  mainAxisSpacing: 4.3,
-                ),
-                itemCount: 10, // Replace with your actual product count
-                itemBuilder: (context, index) {
-                  // Replace with your product card widget
-                  return InkWell(onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductScreen()));
-                  },child: _buildProductCard());
-                },
+              child: Consumer<HomeVM>(
+                builder: (context,s,child) {
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 4.3,
+                      mainAxisSpacing: 4.3,
+                    ),
+                    itemCount:s.productListAll.length, // Replace with your actual product count
+                    itemBuilder: (context, index) {
+                      final aaa =s.productListAll[index];
+                      // Replace with your product card widget
+                      return InkWell(onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductScreen()));
+                      },child: _buildProductCard(
+                        name: aaa.name.toString(),
+                        price: aaa.price ?? 0,
+                        ontap: ()=> Navigator.pushNamed(
+                context,
+                ProductDetail.routeName,
+                arguments: aaa,
+              ),
+                        
+                      ));
+                    },
+                  );
+                }
               ),
             ),
           ],
@@ -116,45 +131,48 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductCard() {
+  Widget _buildProductCard({required String name,required double price,required dynamic Function() ontap}) {
     // Replace with your product card widget
-    return Container(
-       decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(3.6),
-                border: Border.all(color: Colors.grey,width: 0.4),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                   
-                  //  offset: Offset(0, 3),
-                  ),
-                ],
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+         decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(3.6),
+                  border: Border.all(color: Colors.grey,width: 0.4),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                     
+                    //  offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.shopping_cart,
+              size: 50,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 8),
+            Text(
+              name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
               ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.shopping_cart,
-            size: 50,
-            color: Colors.blue,
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Product Name',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
             ),
-          ),
-          Text(
-            'Price: \$50',
-            style: TextStyle(
-              fontSize: 10,
-              color: Colors.grey,
+            Text(
+              'Price: \$$price',
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

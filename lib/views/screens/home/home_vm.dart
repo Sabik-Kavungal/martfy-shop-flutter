@@ -27,10 +27,13 @@ class HomeVM extends ChangeNotifier {
   bool get isProduct => _isProduct;
   List<Product> productList = [];
 
+    List<Product> productListAll = [];
+
   Product product = Product();
 
   HomeVM() {
     getProfile();
+    getAllProductsAll();
   }
 
   Future<void> getAllProducts({required String category}) async {
@@ -40,6 +43,22 @@ class HomeVM extends ChangeNotifier {
       productList = List<Product>.from(
           response.map((productMap) => Product.fromJson(productMap)));
       _logger.d('Products: $productList');
+    } catch (error, stackTrace) {
+      _logger.e("Error getting products: $error",
+          error: error, stackTrace: stackTrace);
+    } finally {
+      _isProduct = false;
+      notifyListeners();
+    }
+  }
+
+   Future<void> getAllProductsAll() async {
+    try {
+      _isProduct = true;
+      final response = await apiProvider.getList('products/all');
+      productListAll = List<Product>.from(
+          response.map((productMap) => Product.fromJson(productMap)));
+      _logger.d('Products: $productListAll');
     } catch (error, stackTrace) {
       _logger.e("Error getting products: $error",
           error: error, stackTrace: stackTrace);
