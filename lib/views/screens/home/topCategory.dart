@@ -16,6 +16,7 @@ class TopCategories extends StatelessWidget {
     return SizedBox(
       height: 70,
       child: ListView.builder(
+        
         itemCount: GlobalVariables.categoryImages.length,
         scrollDirection: Axis.horizontal,
         itemExtent: 90,
