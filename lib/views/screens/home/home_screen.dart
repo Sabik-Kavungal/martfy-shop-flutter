@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             Text(
               'Categories',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -52,12 +52,12 @@ class HomeScreen extends StatelessWidget {
             Text(
               'All Products',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 12),
             Expanded(
               child: Consumer<HomeVM>(
                 builder: (context,s,child) {

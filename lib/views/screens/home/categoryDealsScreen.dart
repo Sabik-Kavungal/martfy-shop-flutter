@@ -27,13 +27,14 @@ class _HomeScreenPState extends State<HomeScreenP> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(widget.category,),
+        title: Text(
+          widget.category,
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-       
           Consumer<HomeVM>(
             builder: (context, homeVM, child) {
               if (homeVM.isProduct) {
@@ -42,97 +43,94 @@ class _HomeScreenPState extends State<HomeScreenP> {
               } else {
                 // Show your product list UI
                 return Expanded(
-                
                     child: GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        childAspectRatio: 0.7, // Adjust this value for the desired aspect ratio
-      ),
-      itemCount: homeVM.productList.length,
-      itemBuilder: (context, index) {
-        final product = homeVM.productList[index];
-        return  _buildProductCard(
-          name: product.name ?? '',
-          price: product.price ?? 0,
-          ontap: () =>  Navigator.pushNamed(
-                context,
-                ProductDetail.routeName,
-                arguments: product,
-              ),
-        );
-        
-        
-        
-        
-        // Container(
-        //  decoration: BoxDecoration(
-        //         color: Colors.white,
-        //         borderRadius: BorderRadius.circular(3.6),
-        //         border: Border.all(color: Colors.grey,width: 0.4),
-        //         boxShadow: [
-        //           BoxShadow(
-        //             color: Colors.grey.withOpacity(0.5),
-                   
-        //           //  offset: Offset(0, 3),
-        //           ),
-        //         ],
-        //       ),
-        //   child: ListTile(
-        //     contentPadding: const EdgeInsets.all(8),
-        //     title: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         product.images != null && product.images!.isNotEmpty
-        //             ? Container(
-        //                 height: 130,
-        //                 decoration: BoxDecoration(
-        //                   border: Border.all(
-        //                     color: Colors.black12,
-        //                     width: 0.5,
-        //                   ),
-        //                   borderRadius: BorderRadius.circular(8),
-        //                   image: DecorationImage(
-        //                     image: NetworkImage(product.images![0]),
-        //                     fit: BoxFit.cover,
-        //                   ),
-        //                 ),
-        //               )
-        //             : SizedBox.shrink(),
-        //         SizedBox(height: 8),
-        //         Text(
-        //           product.name ?? '',
-        //           maxLines: 2,
-        //           overflow: TextOverflow.ellipsis,
-        //           style: TextStyle(
-        //             fontSize: 16,
-        //             fontWeight: FontWeight.bold,
-        //           ),
-        //         ),
-        //         SizedBox(height: 4),
-        //         Text(
-        //           '\$${product.price ?? ''}',
-        //           style: TextStyle(
-        //             fontSize: 14,
-        //             color: Colors.red,
-        //             fontWeight: FontWeight.w500,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //     onTap: () {
-        //       // Handle item tap, e.g., navigate to product details screen
-        //       Navigator.pushNamed(
-        //         context,
-        //         ProductDetail.routeName,
-        //         arguments: product,
-        //       );
-        //     },
-        //   ),
-        // );
-      },
-    ));
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio:
+                        0.7, // Adjust this value for the desired aspect ratio
+                  ),
+                  itemCount: homeVM.productList.length,
+                  itemBuilder: (context, index) {
+                    final product = homeVM.productList[index];
+                    return _buildProductCard(
+                      name: product.name ?? '',
+                      price: product.price ?? 0,
+                      ontap: () => Navigator.pushNamed(
+                        context,
+                        ProductDetail.routeName,
+                        arguments: product,
+                      ),
+                    );
+
+                    // Container(
+                    //  decoration: BoxDecoration(
+                    //         color: Colors.white,
+                    //         borderRadius: BorderRadius.circular(3.6),
+                    //         border: Border.all(color: Colors.grey,width: 0.4),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             color: Colors.grey.withOpacity(0.5),
+
+                    //           //  offset: Offset(0, 3),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //   child: ListTile(
+                    //     contentPadding: const EdgeInsets.all(8),
+                    //     title: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         product.images != null && product.images!.isNotEmpty
+                    //             ? Container(
+                    //                 height: 130,
+                    //                 decoration: BoxDecoration(
+                    //                   border: Border.all(
+                    //                     color: Colors.black12,
+                    //                     width: 0.5,
+                    //                   ),
+                    //                   borderRadius: BorderRadius.circular(8),
+                    //                   image: DecorationImage(
+                    //                     image: NetworkImage(product.images![0]),
+                    //                     fit: BoxFit.cover,
+                    //                   ),
+                    //                 ),
+                    //               )
+                    //             : SizedBox.shrink(),
+                    //         SizedBox(height: 8),
+                    //         Text(
+                    //           product.name ?? '',
+                    //           maxLines: 2,
+                    //           overflow: TextOverflow.ellipsis,
+                    //           style: TextStyle(
+                    //             fontSize: 16,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //         SizedBox(height: 4),
+                    //         Text(
+                    //           '\$${product.price ?? ''}',
+                    //           style: TextStyle(
+                    //             fontSize: 14,
+                    //             color: Colors.red,
+                    //             fontWeight: FontWeight.w500,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     onTap: () {
+                    //       // Handle item tap, e.g., navigate to product details screen
+                    //       Navigator.pushNamed(
+                    //         context,
+                    //         ProductDetail.routeName,
+                    //         arguments: product,
+                    //       );
+                    //     },
+                    //   ),
+                    // );
+                  },
+                ));
               }
             },
           ),
@@ -141,23 +139,26 @@ class _HomeScreenPState extends State<HomeScreenP> {
     );
   }
 
-    Widget _buildProductCard({required String name,required double price , required dynamic Function() ontap}) {
+  Widget _buildProductCard(
+      {required String name,
+      required double price,
+      required dynamic Function() ontap}) {
     // Replace with your product card widget
     return InkWell(
       onTap: ontap,
       child: Container(
-         decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(3.6),
-                  border: Border.all(color: Colors.grey,width: 0.4),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                     
-                    //  offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(3.6),
+          border: Border.all(color: Colors.grey, width: 0.4),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+
+              //  offset: Offset(0, 3),
+            ),
+          ],
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
