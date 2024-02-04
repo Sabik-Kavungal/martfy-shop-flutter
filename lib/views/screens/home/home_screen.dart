@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:martfy/constants/commen_variable.dart';
@@ -45,12 +46,14 @@ class HomeScreen extends StatelessWidget {
             //     fontWeight: FontWeight.bold,
             //     color: Colors.black,
             //   ),
-            // ),
-       
+            // ),MySlider
+
+            MySlider()
+,         SizedBox(height: 8),
            TopCategories(),
             SizedBox(height: 10),
             Text(
-              'All Products',
+              ' Products',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -152,7 +155,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.shopping_cart,
+              Icons.food_bank_sharp,
               size: 50,
               color: Colors.red,
             ),
@@ -243,7 +246,7 @@ class ProductScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Colors.red,
                   ),
                 ),
                 ElevatedButton(
@@ -269,133 +272,59 @@ class ProductScreen extends StatelessWidget {
     );
   }
 }
+class MySlider extends StatelessWidget {
+  final List<IconData> icons = [
+    Icons.star,
+    Icons.favorite,
+    Icons.book,
+    // Add more icons as needed
+  ];
 
-
-// class HomeScreen extends StatelessWidget {
-//   static const String routeName = '/home-screen';
-
-//   const HomeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Welcome Home"),
-//       ),
-//       drawer: _buildDrawer(context),
-//       body:\
-//     );
-//   }
-
-//   Widget _buildDrawer(BuildContext context) {
-//     return Drawer(
-//       child: Consumer<HomeVM>(
-//         builder: (context, authVM, child) {
-//           return Container(
-//             decoration: BoxDecoration(
-//               gradient: LinearGradient(
-//                 begin: Alignment.topLeft,
-//                 end: Alignment.bottomRight,
-//                 colors: [Colors.blue, Colors.indigo],
-//               ),
-//             ),
-//             child: ListView(
-//               padding: EdgeInsets.zero,
-//               children: [
-//                 DrawerHeader(
-//                   decoration: BoxDecoration(
-//                     color: Colors.transparent,
-//                   ),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       CircleAvatar(
-//                         radius: 40,
-//                         backgroundColor: Colors.white,
-//                         child: const Icon(
-//                           Icons.person,
-//                           color: Colors.blue,
-//                           size: 40,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 10),
-//                       Text(
-//                         authVM.user?.name ?? "Guest",
-//                         style: TextStyle(
-//                           color: Colors.white,
-//                           fontSize: 18,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 5),
-//                       Text(
-//                         authVM.user?.email ?? "guest@example.com",
-//                         style: TextStyle(
-//                           color: Colors.white,
-//                           fontSize: 14,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.lock, color: Colors.white),
-//                   title: Text(
-//                     'Change Password',
-//                     style: TextStyle(color: Colors.white),
-//                   ),
-//                   onTap: () {
-//                     Navigator.pop(context);
-//                     Navigator.pushNamed(context, ChangePasswordPage.routeName);
-//                   },
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.person, color: Colors.white),
-//                   title: Text(
-//                     'Update Profile',
-//                     style: TextStyle(color: Colors.white),
-//                   ),
-//                   onTap: () {
-//                     Navigator.pop(context);
-//                     Navigator.pushNamed(context, UpdateProfilePage.routeName);
-//                   },
-//                 ),
-//                 ListTile(
-//                   leading:
-//                       Icon(Icons.admin_panel_settings, color: Colors.white),
-//                   title: Text(
-//                     'Admin',
-//                     style: TextStyle(color: Colors.white),
-//                   ),
-//                   onTap: () {
-//                     Navigator.pop(context);
-//                     Navigator.pushNamed(context, AddProductScreen.routeName);
-//                   },
-//                 ),
-//                 ListTile(
-//                   leading: Icon(Icons.logout, color: Colors.white),
-//                   title: Text(
-//                     'Log Out',
-//                     style: TextStyle(color: Colors.white),
-//                   ),
-//                   onTap: () {
-//                     Navigator.pop(context);
-//                     Provider.of<AuthVM>(context, listen: false).logoutUser();
-
-//                     Navigator.pushNamed(context, AuthScreen.routeName);
-//                   },
-//                 ),
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-
-// }
-
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 100.0,
+        enlargeCenterPage: true,
+        autoPlay: true,
+        aspectRatio: 16 / 9,
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enableInfiniteScroll: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        viewportFraction: 0.4,
+      ),
+      items: icons.map((IconData icon) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+              
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  size: 60.0,
+                  color: Colors.red,
+                ),
+              ),
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+}
 class ChangePasswordPage extends StatelessWidget {
   static const String routeName = '/change-password';
 
