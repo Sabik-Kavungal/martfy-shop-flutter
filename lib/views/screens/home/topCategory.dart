@@ -47,7 +47,7 @@ class TopCategories extends StatelessWidget {
                     size: 35,
                     color: Colors.red,
                   ),
-                  SizedBox(height: 8),
+                const  SizedBox(height: 8),
                   Text(
                     GlobalVariables.categoryImages[index]['title']!,
                     style: const TextStyle(
