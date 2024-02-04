@@ -274,11 +274,13 @@ class ProductScreen extends StatelessWidget {
 }
 class MySlider extends StatelessWidget {
   final List<IconData> icons = [
-    Icons.star,
-    Icons.favorite,
-    Icons.book,
-    // Add more icons as needed
+    Icons.shopping_cart,
+    Icons.payment,
+    Icons.card_giftcard,
+    Icons.local_offer,
+    // Add more e-commerce icons as needed
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -314,7 +316,7 @@ class MySlider extends StatelessWidget {
               child: Center(
                 child: Icon(
                   icon,
-                  size: 60.0,
+                  size: 54.0,
                   color: Colors.red,
                 ),
               ),
