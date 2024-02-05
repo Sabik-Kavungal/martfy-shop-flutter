@@ -133,10 +133,14 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
               price: as.product?.price ?? 0,
               quantity: int.parse(as.quantity.toString()),
               increment: () {
-                s.increment(id: as.product?.id ?? '');
+                s
+                    .increment(id: as.product?.id ?? '')
+                    .then((value) => s.getCarts());
               },
               decrement: () {
-                s.decrement(id: as.product?.id ?? '');
+                s
+                    .decrement(id: as.product?.id ?? '')
+                    .then((value) => s.getCarts());
               },
             );
           },
