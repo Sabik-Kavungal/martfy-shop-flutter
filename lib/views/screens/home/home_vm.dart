@@ -27,6 +27,9 @@ class HomeVM extends ChangeNotifier {
 
   bool _isProduct = false;
   bool get isProduct => _isProduct;
+
+    bool _isProducct = false;
+  bool get isProducct => _isProducct;
   List<Product> productList = [];
 
   List<Product> productListAll = [];
@@ -185,9 +188,11 @@ class HomeVM extends ChangeNotifier {
     } finally {}
   }
 
+  
+
   Future<void> getCarts() async {
     try {
-      _isProduct = true;
+      _isProducct = true;
       final response = await apiProvider.getList('get-cart');
       cartsList = List<OrderProduct>.from(
           response.map((productMap) => OrderProduct.fromJson(productMap)));
@@ -196,7 +201,7 @@ class HomeVM extends ChangeNotifier {
       _logger.e("Error getting products: $error",
           error: error, stackTrace: stackTrace);
     } finally {
-      _isProduct = false;
+      _isProducct = false;
       notifyListeners();
     }
   }

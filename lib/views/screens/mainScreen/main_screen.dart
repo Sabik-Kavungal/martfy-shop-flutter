@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:martfy/views/screens/cart/cart_screen.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
+import 'package:martfy/views/screens/home/home_vm.dart';
 import 'package:martfy/views/screens/home/topCategory.dart';
 import 'package:martfy/views/screens/mainScreen/mainVM.dart';
 import 'package:martfy/views/screens/profile/profile_scree.dart';
@@ -29,6 +30,7 @@ class MainScreenxxx extends StatelessWidget {
           currentIndex: navProvider.currentIndex,
           onTap: (index) {
             navProvider.setIndex(index);
+            Provider.of<HomeVM>(context,listen: false).getCarts();
           },
           items: [
             BottomNavigationBarItem(

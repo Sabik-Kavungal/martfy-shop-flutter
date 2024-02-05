@@ -126,6 +126,17 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
       ),
       body: Consumer<HomeVM>(
         builder: (context, s, child) {
+
+            if (s.isProducct) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (s.cartsList.isEmpty) {
+            return Center(
+              child: Text('No data available.'),
+            );
+          } else {
+            
           return Column(
             children: [
               Expanded(
@@ -134,7 +145,7 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
                   itemBuilder: (context, index) {
                     final as = s.cartsList[index];
                     return ShoppingCartCard(
-                      productName: as.product?.name ?? 'we',
+                      productName: as.product?.name ?? 'Product Name',
                       price: as.product?.price ?? 0,
                       quantity: int.parse(as.quantity.toString()),
                       increment: () {
@@ -151,23 +162,35 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
                   },
                 ),
               ),
-               ElevatedButton(
-            onPressed: () {
-             s.placeOrder(
-                (success) {
-                  
-                },
-             
-            
-              );
-            },
-            child: Text("Place Order"),
-          ),
+              SizedBox(height: 20),  // Add some space between the list and the button
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    s.placeOrder(
+                      (success) {
+                        s.getCarts();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Order created successfully.'),
+                          backgroundColor: Colors.green,
+                        ));
+                      },
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Place Order",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
+          }
         },
       ),
-     
     );
   }
 }
