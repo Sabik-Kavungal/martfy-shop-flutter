@@ -50,7 +50,7 @@ class _ShoppingCartCardState extends State<ShoppingCartCard> {
               ),
               child: Icon(
                 Icons.shopping_cart,
-                color: Colors.red,
+                color: Colors.pink,
               ),
             ),
             SizedBox(

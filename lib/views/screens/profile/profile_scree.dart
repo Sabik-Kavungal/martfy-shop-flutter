@@ -40,7 +40,7 @@ class UserProfileBody extends StatelessWidget {
                     backgroundColor: Colors.grey[200],
                     child: const Icon(
                       Icons.person,
-                      color: Colors.red,
+                      color: Colors.teal,
                       size: 50,
                     ),
                   ),
@@ -127,7 +127,7 @@ class UserProfileBody extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: Colors.red,
+        color: Colors.tealAccent,
         size: 22,
       ),
       title: Text(
