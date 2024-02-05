@@ -9,6 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:martfy/constants/commen_variable.dart';
 import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/noetwork_repo.dart';
+import 'package:martfy/models/cart_model.dart';
 import 'package:martfy/models/user_model.dart';
 
 import '../../../models/product_model.dart';
@@ -28,7 +29,7 @@ class HomeVM extends ChangeNotifier {
   List<Product> productList = [];
 
   List<Product> productListAll = [];
-  List<Product> cartsList = [];
+  List<CartModel> cartsList = [];
 
   Product product = Product();
 
@@ -175,8 +176,8 @@ class HomeVM extends ChangeNotifier {
     try {
       _isProduct = true;
       final response = await apiProvider.getList('get-cart');
-      cartsList = List<Product>.from(response
-          .map((productMap) => Product.fromJson(productMap['product'])));
+      cartsList = List<CartModel>.from(response
+          .map((productMap) => CartModel.fromJson(productMap)));
       _logger.d('Products: $cartsList');
     } catch (error, stackTrace) {
       _logger.e("Error getting products: $error",

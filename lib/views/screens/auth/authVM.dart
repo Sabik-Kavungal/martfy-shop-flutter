@@ -28,8 +28,17 @@ class AuthVM extends ChangeNotifier {
       printx(".........................", user);
       final response = await apiProvider.post('signin', user.toJson());
       final token = response['token'];
+       final userId = response['_id'];
+      final userType = response['userType'];
+      printx("this is user is..............user is user is ...........",
+          "${userId} use idddddddddddddddddddddd");
+      printx('dddddddddddddddddddddd this my token dddddddddddddddddddddddd',
+          token);
       _logger.d("Token: $token");
       db.toDb(await db.openBox('token'), "key", token);
+      db.toDb(await db.openBox('userId'), "key", userId);
+      db.toDb(await db.openBox('userType'), "key", userType);
+        _logger.d("userTypessssssssssssssssssssssssssssssssssssss: $userType");
       success = true;
       notifyListeners();
     } catch (error, stackTrace) {

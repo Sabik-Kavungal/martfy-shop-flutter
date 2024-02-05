@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:martfy/constants/commen_variable.dart';
+import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/models/user_model.dart';
+import 'package:martfy/views/screens/admin/addProduct.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/home/home_screen.dart';
 import 'package:martfy/views/screens/mainScreen/main_screen.dart';
@@ -26,7 +28,8 @@ class LoginScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background_image.jpg'), // Add your background image
+            image: AssetImage(
+                'assets/background_image.jpg'), // Add your background image
             fit: BoxFit.cover,
           ),
         ),
@@ -43,7 +46,6 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-
                     SizedBox(height: 5),
                     CustomTextField(
                       value: vm.user.email ?? '',
@@ -59,7 +61,6 @@ class LoginScreen extends StatelessWidget {
                       value: vm.user.password ?? '',
                       hintText: 'Password...',
                       prefixIcon: const Icon(Icons.lock),
-
                       focusNode: _passwordNode,
                       onChange: (value) {
                         vm.user = vm.user.copyWith(password: value);
@@ -69,14 +70,35 @@ class LoginScreen extends StatelessWidget {
                     CustomButton(
                       color: Colors.blue,
                       onClick: () {
-                        vm.login((success) {
+                        vm.login((success) async {
                           if (success) {
-                            Navigator.pushNamed(context, MainScreenxxx.routeName)
-                                .then((value) {
-                              xmToast('Successfully Logged', Colors.green);
-                            });
+                            final userType = LocalDatabaseService().fromDb(
+                                await LocalDatabaseService()
+                                    .openBox("userType"),
+                                'key');
+
+                            if (userType == 'user') {
+                              print(userType);
+                              Navigator.pushReplacementNamed(
+                                context,
+                                MainScreenxxx.routeName,
+                              );
+                            } else if (userType == 'admin') {
+                              print(userType);
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AddProductScreen.routeName,
+                              );
+                            }
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Login successful'),
+                              backgroundColor: Colors.green,
+                            ));
                           } else {
-                            xmToast('Login Failed', Colors.red);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Login failed'),
+                              backgroundColor: Colors.red,
+                            ));
                           }
                         });
                       },

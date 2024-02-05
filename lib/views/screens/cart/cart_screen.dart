@@ -129,10 +129,10 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
           itemBuilder: (context, index) {
             final as = s.cartsList[index];
             return ShoppingCartCard(
-              productName: as.name ?? 'we',
-              price: as.price ?? 0,
+              productName: as.product?.name ?? 'we',
+              price: as.product?.price ?? 0,
               quantity: int.parse(as.quantity.toString())
-              , increment: () {  s.increment(id: as.id.toString());}, decrement: () {  },
+              , increment: () {  s.increment(id:as.product?.id ?? '' );}, decrement: () {  },
             );
           },
         );

@@ -3,9 +3,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:martfy/constants/commen_variable.dart';
+import 'package:martfy/views/screens/auth/authVM.dart';
+import 'package:martfy/views/screens/auth/login_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
 import 'package:martfy/views/widgets/custom_button.dart';
 import 'package:martfy/views/widgets/custom_textield.dart';
+import 'package:provider/provider.dart';
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
@@ -38,19 +41,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(),
+      appBar: AppBar(
+        title: Text('Admin'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Provider.of<AuthVM>(context, listen: false).logoutUser();
+              Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+            },
+            icon: const Icon(Icons.logout),
           ),
-          title: const Text(
-            'Add Product',
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-        ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Form(
