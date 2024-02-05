@@ -149,9 +149,9 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.food_bank_sharp,
-              size: 50,
-              color: Colors.red,
+              Icons.shopping_bag_sharp,
+              size: 47,
+              color: Colors.deepPurpleAccent,
             ),
             SizedBox(height: 8),
             Text(
