@@ -17,11 +17,8 @@ import '../auth/auth_screen.dart';
 
 // HomeScreen.dart
 
-
-
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home-screen';
-  
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +32,13 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text(
-            //   'Categories',
-            //   style: TextStyle(
-            //     fontSize: 16,
-            //     fontWeight: FontWeight.bold,
-            //     color: Colors.black,
-            //   ),
-            // ),MySlider
-
-            MySlider()
-,         SizedBox(height: 8),
-           TopCategories(),
+            MySlider(),
+            SizedBox(height: 8),
+            TopCategories(),
             SizedBox(height: 10),
             Text(
               ' Products',
@@ -62,34 +50,37 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Expanded(
-              child: Consumer<HomeVM>(
-                builder: (context,s,child) {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 4.3,
-                      mainAxisSpacing: 4.3,
-                    ),
-                    itemCount:s.productListAll.length, // Replace with your actual product count
-                    itemBuilder: (context, index) {
-                      final aaa =s.productListAll[index];
-                      // Replace with your product card widget
-                      return InkWell(onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductScreen()));
-                      },child: _buildProductCard(
-                        name: aaa.name.toString(),
-                        price: aaa.price ?? 0,
-                        ontap: ()=> Navigator.pushNamed(
-                context,
-                ProductDetail.routeName,
-                arguments: aaa,
-              ),
-                        
-                      ));
-                    },
-                  );
-                }
-              ),
+              child: Consumer<HomeVM>(builder: (context, s, child) {
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 4.3,
+                    mainAxisSpacing: 4.3,
+                  ),
+                  itemCount: s.productListAll
+                      .length, // Replace with your actual product count
+                  itemBuilder: (context, index) {
+                    final aaa = s.productListAll[index];
+                    // Replace with your product card widget
+                    return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductScreen()));
+                        },
+                        child: _buildProductCard(
+                          name: aaa.name.toString(),
+                          price: aaa.price ?? 0,
+                          ontap: () => Navigator.pushNamed(
+                            context,
+                            ProductDetail.routeName,
+                            arguments: aaa,
+                          ),
+                        ));
+                  },
+                );
+              }),
             ),
           ],
         ),
@@ -100,18 +91,18 @@ class HomeScreen extends StatelessWidget {
   Widget _buildCategoryCard(String categoryName, IconData icon, Color color) {
     return Container(
       width: 120,
-       decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.8),
-                border: Border.all(color: Colors.grey,width: 0.2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                   
-                  //  offset: Offset(0, 3),
-                  ),
-                ],
-              ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.8),
+        border: Border.all(color: Colors.grey, width: 0.2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+
+            //  offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -134,23 +125,26 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductCard({required String name,required double price,required dynamic Function() ontap}) {
+  Widget _buildProductCard(
+      {required String name,
+      required double price,
+      required dynamic Function() ontap}) {
     // Replace with your product card widget
     return InkWell(
       onTap: ontap,
       child: Container(
-         decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(3.6),
-                  border: Border.all(color: Colors.grey,width: 0.4),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                     
-                    //  offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(3.6),
+          border: Border.all(color: Colors.grey, width: 0.4),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+
+              //  offset: Offset(0, 3),
+            ),
+          ],
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -180,6 +174,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -272,8 +267,9 @@ class ProductScreen extends StatelessWidget {
     );
   }
 }
+
 class MySlider extends StatelessWidget {
-   final List<Map<String, dynamic>> erpFeatures = [
+  final List<Map<String, dynamic>> erpFeatures = [
     {
       'icon': Icons.star,
       'title': 'Employee Performance',
@@ -308,7 +304,7 @@ class MySlider extends StatelessWidget {
         height: 180.0,
         enlargeCenterPage: true,
         autoPlay: true,
-        aspectRatio: 14/ 9,
+        aspectRatio: 14 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -370,6 +366,7 @@ class MySlider extends StatelessWidget {
     );
   }
 }
+
 class ChangePasswordPage extends StatelessWidget {
   static const String routeName = '/change-password';
 
