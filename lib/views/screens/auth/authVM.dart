@@ -36,7 +36,7 @@ class AuthVM extends ChangeNotifier {
           token);
       _logger.d("Token: $token");
       db.toDb(await db.openBox('token'), "key", token);
-      db.toDb(await db.openBox('userId'), "key", userId);
+      db.toDb(await db.openBox('_id'), "key", userId);
       db.toDb(await db.openBox('userType'), "key", userType);
         _logger.d("userTypessssssssssssssssssssssssssssssssssssss: $userType");
       success = true;

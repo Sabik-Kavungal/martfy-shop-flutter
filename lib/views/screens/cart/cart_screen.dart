@@ -117,35 +117,57 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
         title: Text('Cart Page'),
         actions: [
           IconButton(
-              onPressed: () {
-                Provider.of<HomeVM>(context, listen: false).getCarts();
-              },
-              icon: Icon(Icons.online_prediction))
+            onPressed: () {
+              Provider.of<HomeVM>(context, listen: false).getCarts();
+            },
+            icon: Icon(Icons.online_prediction),
+          )
         ],
       ),
-      body: Consumer<HomeVM>(builder: (context, s, child) {
-        return ListView.builder(
-          itemCount: s.cartsList.length,
-          itemBuilder: (context, index) {
-            final as = s.cartsList[index];
-            return ShoppingCartCard(
-              productName: as.product?.name ?? 'we',
-              price: as.product?.price ?? 0,
-              quantity: int.parse(as.quantity.toString()),
-              increment: () {
-                s
-                    .increment(id: as.product?.id ?? '')
-                    .then((value) => s.getCarts());
-              },
-              decrement: () {
-                s
-                    .decrement(id: as.product?.id ?? '')
-                    .then((value) => s.getCarts());
-              },
-            );
-          },
-        );
-      }),
+      body: Consumer<HomeVM>(
+        builder: (context, s, child) {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: s.cartsList.length,
+                  itemBuilder: (context, index) {
+                    final as = s.cartsList[index];
+                    return ShoppingCartCard(
+                      productName: as.product?.name ?? 'we',
+                      price: as.product?.price ?? 0,
+                      quantity: int.parse(as.quantity.toString()),
+                      increment: () {
+                        s
+                            .increment(id: as.product?.id ?? '')
+                            .then((value) => s.getCarts());
+                      },
+                      decrement: () {
+                        s
+                            .decrement(id: as.product?.id ?? '')
+                            .then((value) => s.getCarts());
+                      },
+                    );
+                  },
+                ),
+              ),
+               ElevatedButton(
+            onPressed: () {
+             s.placeOrder(
+                (success) {
+                  
+                },
+             
+            
+              );
+            },
+            child: Text("Place Order"),
+          ),
+            ],
+          );
+        },
+      ),
+     
     );
   }
 }

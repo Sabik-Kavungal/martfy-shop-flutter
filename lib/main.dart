@@ -5,8 +5,6 @@ import 'package:martfy/helper/route.dart';
 import 'package:martfy/views/screens/admin/addProduct.dart';
 import 'package:martfy/views/screens/auth/authVM.dart';
 import 'package:martfy/views/screens/auth/auth_screen.dart';
-import 'package:martfy/views/screens/auth/login_screen.dart';
-import 'package:martfy/views/screens/home/home_screen.dart';
 import 'package:martfy/views/screens/home/home_vm.dart';
 import 'package:martfy/views/screens/mainScreen/mainVM.dart';
 import 'package:martfy/views/screens/mainScreen/main_screen.dart';
@@ -53,7 +51,7 @@ class MyApp extends StatelessWidget {
             return saved != null
                 ? userType == 'user'
                     ? MainScreenxxx()
-                    : AddProductScreen()
+                    : const AddProductScreen()
                 : AuthScreen();
           } else {
             return AuthScreen();

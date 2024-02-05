@@ -10,6 +10,7 @@ import 'package:martfy/constants/commen_variable.dart';
 import 'package:martfy/helper/localDB.dart';
 import 'package:martfy/helper/noetwork_repo.dart';
 import 'package:martfy/models/cart_model.dart';
+import 'package:martfy/models/order_model.dart';
 import 'package:martfy/models/user_model.dart';
 
 import '../../../models/product_model.dart';
@@ -29,7 +30,7 @@ class HomeVM extends ChangeNotifier {
   List<Product> productList = [];
 
   List<Product> productListAll = [];
-  List<CartModel> cartsList = [];
+  List<OrderProduct> cartsList = [];
 
   Product product = Product();
 
@@ -171,7 +172,8 @@ class HomeVM extends ChangeNotifier {
       _logger.e("Error: $error", error: error, stackTrace: stackTrace);
     } finally {}
   }
-    Future<void> decrement({required String id}) async {
+
+  Future<void> decrement({required String id}) async {
     try {
       await apiProvider.incre('decrement-cart/$id');
 
@@ -183,13 +185,12 @@ class HomeVM extends ChangeNotifier {
     } finally {}
   }
 
-
   Future<void> getCarts() async {
     try {
       _isProduct = true;
       final response = await apiProvider.getList('get-cart');
-      cartsList = List<CartModel>.from(response
-          .map((productMap) => CartModel.fromJson(productMap)));
+      cartsList = List<OrderProduct>.from(
+          response.map((productMap) => OrderProduct.fromJson(productMap)));
       _logger.d('Products: $cartsList');
     } catch (error, stackTrace) {
       _logger.e("Error getting products: $error",
@@ -295,5 +296,41 @@ class HomeVM extends ChangeNotifier {
     await compressedImage.writeAsBytes(compressedBytes);
 
     return compressedImage;
+  }
+
+  Order order = Order();
+
+  Future<void> placeOrder(void Function(bool success) callback) async {
+    final userId = LocalDatabaseService()
+        .fromDb(await LocalDatabaseService().openBox("_id"), 'key');
+    bool success = false;
+    try {
+      order = order.copyWith(
+          productList: List.from(cartsList),
+          userId: userId,
+          address: "Sabik kavungaql");
+
+      print("Order JSON: ${order.toJson()}");
+
+      // Assuming postToken returns a Future, use await here
+      var response = await apiProvider.postToken('orders', order.toJson());
+
+      // Assuming response contains relevant information about success or failure
+      print("Response from server: $response");
+
+      // Check if the response indicates success
+      if (response['success'] == true) {
+        success = true;
+        notifyListeners();
+      } else {
+        print("Error placing order: ${response['error']}");
+      }
+    } catch (error, stackTrace) {
+      print("Error placing order: $error");
+      _logger.e("Error: $error", error: error, stackTrace: stackTrace);
+    } finally {
+      callback(success);
+      print("Order placement completed: $success");
+    }
   }
 }

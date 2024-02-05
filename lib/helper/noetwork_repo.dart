@@ -49,7 +49,7 @@ class ApiProvider {
     }
   }
    Future<Map<String, dynamic>> postToken(
-      String endpoint, Map<String, dynamic>? body) async {
+      String endpoint, Map<String, dynamic> body) async {
     try {
       final boxOpen = await db.openBox("token");
       final a = db.fromDb(boxOpen, 'key');
