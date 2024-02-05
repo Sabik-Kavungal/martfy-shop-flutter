@@ -53,7 +53,7 @@ class TopCategories extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      color: Colors.red,
+                      color: Colors.black,
                     ),
                   ),
                 ],

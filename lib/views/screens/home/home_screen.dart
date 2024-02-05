@@ -274,26 +274,31 @@ class MySlider extends StatelessWidget {
       'icon': Icons.star,
       'title': 'Employee Performance',
       'description': 'Evaluate and track employee performance',
+      'color' : Colors.green
     },
     {
       'icon': Icons.favorite,
       'title': 'Resource Management',
       'description': 'Efficiently manage company resources',
+       'color' : Colors.blueAccent
     },
     {
       'icon': Icons.shopping_cart,
       'title': 'Inventory Control',
       'description': 'Monitor and control inventory levels',
+       'color' : Colors.cyan
     },
     {
       'icon': Icons.access_time,
       'title': 'Time Tracking',
       'description': 'Track employee working hours and attendance',
+       'color' : Colors.brown
     },
     {
       'icon': Icons.camera,
       'title': 'Document Management',
       'description': 'Organize and manage company documents',
+       'color' : Colors.redAccent
     },
   ];
 
@@ -335,7 +340,7 @@ class MySlider extends StatelessWidget {
                     Icon(
                       feature['icon'],
                       size: 52.0,
-                      color: Colors.red,
+                      color: feature['color'],
                     ),
                     SizedBox(height: 8.0),
                     Text(
