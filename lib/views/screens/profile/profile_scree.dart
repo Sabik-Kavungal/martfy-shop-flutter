@@ -41,23 +41,23 @@ class UserProfileBody extends StatelessWidget {
                     child: const Icon(
                       Icons.person,
                       color: Colors.red,
-                      size: 80,
+                      size: 50,
                     ),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    '${authVM.user?.name}',
+                    '${authVM.user.name}',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 2),
                   Text(
-                    '${authVM.user?.email}',
+                    '${authVM.user.email}',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 15,
                       color: Colors.grey,
                     ),
                     textAlign: TextAlign.center,
@@ -128,11 +128,11 @@ class UserProfileBody extends StatelessWidget {
       leading: Icon(
         icon,
         color: Colors.red,
-        size: 28,
+        size: 22,
       ),
       title: Text(
         title,
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 13),
       ),
       onTap: onTap,
     );
