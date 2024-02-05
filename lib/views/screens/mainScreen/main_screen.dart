@@ -25,7 +25,7 @@ class MainScreenxxx extends StatelessWidget {
       bottomNavigationBar: Container(
         width: double.infinity, // Make the container extend the full width
         child: BottomNavigationBar(
-          selectedItemColor: Colors.red,
+          selectedItemColor: Colors.pinkAccent,
           unselectedItemColor: Colors.grey,
           currentIndex: navProvider.currentIndex,
           onTap: (index) {
@@ -40,7 +40,7 @@ class MainScreenxxx extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Badge.count(count: Provider.of<HomeVM>(context,listen: false).cartsList.length,
-              child: Icon(Icons.shopping_cart),backgroundColor: Colors.red),
+              child: Icon(Icons.shopping_cart),backgroundColor: Colors.blueGrey),
               label: 'Cart',
             ),
            
