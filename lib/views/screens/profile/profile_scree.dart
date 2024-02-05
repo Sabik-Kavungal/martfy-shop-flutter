@@ -65,9 +65,9 @@ class UserProfileBody extends StatelessWidget {
       
                   // Amazon-like Account Page Section
                   Card(
-                    elevation: 4,
+                    elevation: 1,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(7.6),
                     ),
                     child: Column(
                       children: [
