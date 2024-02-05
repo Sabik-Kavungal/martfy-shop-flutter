@@ -7,14 +7,14 @@ class ShoppingCartCard extends StatefulWidget {
   final double price;
   final int quantity;
   final Function() increment;
-   final Function() decrement;
+  final Function() decrement;
 
   ShoppingCartCard({
     required this.productName,
     required this.price,
     required this.quantity,
     required this.increment,
-     required this.decrement,
+    required this.decrement,
   });
 
   @override
@@ -93,7 +93,7 @@ class _ShoppingCartCardState extends State<ShoppingCartCard> {
                 ),
                 IconButton(
                   icon: Icon(Icons.add),
-                  onPressed:widget.increment,
+                  onPressed: widget.increment,
                 ),
               ],
             ),
@@ -131,8 +131,13 @@ class _ShoppingCartListState extends State<ShoppingCartList> {
             return ShoppingCartCard(
               productName: as.product?.name ?? 'we',
               price: as.product?.price ?? 0,
-              quantity: int.parse(as.quantity.toString())
-              , increment: () {  s.increment(id:as.product?.id ?? '' );}, decrement: () {  },
+              quantity: int.parse(as.quantity.toString()),
+              increment: () {
+                s.increment(id: as.product?.id ?? '');
+              },
+              decrement: () {
+                s.decrement(id: as.product?.id ?? '');
+              },
             );
           },
         );

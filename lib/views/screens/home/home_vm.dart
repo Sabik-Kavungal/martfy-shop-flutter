@@ -171,6 +171,18 @@ class HomeVM extends ChangeNotifier {
       _logger.e("Error: $error", error: error, stackTrace: stackTrace);
     } finally {}
   }
+    Future<void> decrement({required String id}) async {
+    try {
+      await apiProvider.incre('decrement-cart/$id');
+
+      printx("add to cart---------------------", product.toJson());
+
+      notifyListeners();
+    } catch (error, stackTrace) {
+      _logger.e("Error: $error", error: error, stackTrace: stackTrace);
+    } finally {}
+  }
+
 
   Future<void> getCarts() async {
     try {
