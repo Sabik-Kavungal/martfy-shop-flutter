@@ -45,7 +45,7 @@ class TopCategories extends StatelessWidget {
                   Icon(
                     GlobalVariables.categoryImages[index]['icon']!,
                     size: 35,
-                    color: Colors.red,
+                    color:  GlobalVariables.categoryImages[index]['color']!,
                   ),
                   const SizedBox(height: 8),
                   Text(

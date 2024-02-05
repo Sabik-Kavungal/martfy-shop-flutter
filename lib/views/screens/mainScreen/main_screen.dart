@@ -6,14 +6,14 @@ import 'package:martfy/views/screens/home/topCategory.dart';
 import 'package:martfy/views/screens/mainScreen/mainVM.dart';
 import 'package:martfy/views/screens/profile/profile_scree.dart';
 import 'package:provider/provider.dart';
+
 class MainScreenxxx extends StatelessWidget {
   static const String routeName = '/main-screen';
 
   final List<Widget> pages = [
     HomeScreen(),
     ShoppingCartList(),
-  
-      UserProfileBody(),
+    UserProfileBody(),
   ];
 
   @override
@@ -30,11 +30,10 @@ class MainScreenxxx extends StatelessWidget {
           currentIndex: navProvider.currentIndex,
           onTap: (index) {
             navProvider.setIndex(index);
-            Provider.of<HomeVM>(context,listen: false).getCarts();
+            Provider.of<HomeVM>(context, listen: false).getCarts();
           },
           items: [
             BottomNavigationBarItem(
-     
               icon: Icon(Icons.home),
               label: 'Home',
             ),
@@ -42,12 +41,10 @@ class MainScreenxxx extends StatelessWidget {
               icon: Icon(Icons.shopping_cart),
               label: 'Cart',
             ),
-           
-              BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Profile',
             ),
-            
           ],
         ),
       ),

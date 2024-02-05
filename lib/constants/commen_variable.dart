@@ -71,22 +71,27 @@ static const List<Map<String, dynamic>> categoryImages = [
   {
     'title': 'Mobiles',
     'icon': Icons.mobile_friendly,
+    'color':Colors.green
   },
   {
     'title': 'Essentials',
     'icon': Icons.shopping_bag,
+      'color':Colors.blue
   },
   {
     'title': 'Appliances',
     'icon': Icons.kitchen,
+      'color':Colors.brown
   },
   {
     'title': 'Books',
     'icon': Icons.book,
+      'color':Colors.cyan
   },
   {
     'title': 'Fashion',
     'icon': Icons.accessibility,
+      'color':Colors.blueGrey
   },
 ];
 
