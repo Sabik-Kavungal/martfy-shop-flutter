@@ -273,51 +273,94 @@ class ProductScreen extends StatelessWidget {
   }
 }
 class MySlider extends StatelessWidget {
-  final List<IconData> icons = [
-    Icons.shopping_cart,
-    Icons.payment,
-    Icons.card_giftcard,
-    Icons.local_offer,
-    // Add more e-commerce icons as needed
+   final List<Map<String, dynamic>> erpFeatures = [
+    {
+      'icon': Icons.star,
+      'title': 'Employee Performance',
+      'description': 'Evaluate and track employee performance',
+    },
+    {
+      'icon': Icons.favorite,
+      'title': 'Resource Management',
+      'description': 'Efficiently manage company resources',
+    },
+    {
+      'icon': Icons.shopping_cart,
+      'title': 'Inventory Control',
+      'description': 'Monitor and control inventory levels',
+    },
+    {
+      'icon': Icons.access_time,
+      'title': 'Time Tracking',
+      'description': 'Track employee working hours and attendance',
+    },
+    {
+      'icon': Icons.camera,
+      'title': 'Document Management',
+      'description': 'Organize and manage company documents',
+    },
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 100.0,
+        height: 180.0,
         enlargeCenterPage: true,
         autoPlay: true,
-        aspectRatio: 16 / 9,
+        aspectRatio: 14/ 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
-        viewportFraction: 0.4,
+        viewportFraction: 0.45,
       ),
-      items: icons.map((IconData icon) {
+      items: erpFeatures.map((feature) {
         return Builder(
           builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-              
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Icon(
-                  icon,
-                  size: 54.0,
-                  color: Colors.red,
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      feature['icon'],
+                      size: 52.0,
+                      color: Colors.red,
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      feature['title'],
+                      style: TextStyle(
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        feature['description'],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 8.0,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
